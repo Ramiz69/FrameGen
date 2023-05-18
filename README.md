@@ -1,4 +1,4 @@
-# ![This is a alt text.](/image/appIcon.png "This is an app icon image.") FrameGen
+# <img src="/image/appIcon.png" width="100" height="100"> FrameGen
 
 ###### FrameGen is a powerful application designed to streamline the process of creating xcarchive files from your xcodeproj projects. With an intuitive user interface and a wide range of functional capabilities, FrameGen allows you to easily and quickly generate ready-to-distribute archives for your iOS and Mac applications.
 
@@ -16,15 +16,15 @@
 
 ## Main Page
 
-![This is a alt text.](/image/mainPage.png "This is a main page image.")
+<img src="/image/mainPage.png" width="300" height="400">
 
 ## Choose export location
 
-![This is a alt text.](/image/chooseLocation.png "This is a choose location image.")
+<img src="/image/chooseLocation.png" width="300" height="400">
 
 ## Configuration framework
 
-![This is a alt text.](/image/configuration.png "This is a configuration image.")
+<img src="/image/configuration.png" width="300" height="400">
 
 ### General scripts
 
