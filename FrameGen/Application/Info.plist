@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Access to the downloads is necessary to search for folders containing Xcode project files for generating frameworks.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Access to the documents is necessary to search for folders containing Xcode project files for generating frameworks.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Access to the desktop is necessary to search for folders containing Xcode project files for generating frameworks.</string>
+</dict>
+</plist>
