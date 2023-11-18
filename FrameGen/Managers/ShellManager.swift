@@ -34,7 +34,7 @@ final class ShellManager: ShellManagerProtocol {
                 return """
         cd \(path);
         xcodebuild archive \
-        -scheme \(command.scheme) \
+        -scheme '\(command.scheme)' \
         -configuration \(command.configuration) \
         -destination '\(script.destination)' \
         -archivePath '\(folder)\(command.scheme)\(script.archiveName)' \

@@ -50,7 +50,7 @@ extension OptionsPresenter: OptionsPresenterOutputProtocol {
                         return
                     }
                     
-                    data.schemes = schemes.filter { !$0.isEmpty }
+                    data.schemes = schemes.compactMap { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
                     DispatchQueue.main.async {
                         self.view?.updateData(data)
                     }

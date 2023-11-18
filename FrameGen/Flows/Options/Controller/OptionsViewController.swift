@@ -79,7 +79,10 @@ final class OptionsViewController: NSViewController, OptionsViewInputProtocol {
             let alert = NSAlert(error: error)
             alert.alertStyle = .warning
             alert.addButton(withTitle: "OK")
-            alert.runModal()
+            let result = alert.runModal()
+            switch result {
+            default: dismissView()
+            }
         } else {
             let alert = NSAlert()
             alert.alertStyle = .informational
@@ -87,7 +90,10 @@ final class OptionsViewController: NSViewController, OptionsViewInputProtocol {
                 alert.informativeText = message
             }
             alert.addButton(withTitle: "OK")
-            alert.runModal()
+            let result = alert.runModal()
+            switch result {
+            default: dismissView()
+            }
         }
     }
     
