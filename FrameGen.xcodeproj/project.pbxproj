@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		489D4094B3E6E7371963AF3C /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400431A229984A2BA6021A3A /* TestSupport.swift */; };
+		FB936CD51DB1A7AA4E66A812 /* ProjectInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6559978338F272BEE8F5BEE0 /* ProjectInfoTests.swift */; };
+		8F8E65782BAD13F02DA168C3 /* XcodeCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99569F0C0D2242246D1458D /* XcodeCommandTests.swift */; };
+		269B226DA50FBD34ADC50D92 /* BuildStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E9A0DCFA013DC175158D45 /* BuildStateTests.swift */; };
+		94C9FB2B1653047CD3D88951 /* ProjectLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F8FBFB4AC5D119EA82AD2 /* ProjectLocatorTests.swift */; };
+		50EBD5583671FEDD263C30B8 /* XCFrameworkBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45CABAA2BB083405EBA03BD /* XCFrameworkBuilderTests.swift */; };
+		68945E8C52E8DFDA51A444BB /* ProcessRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D1B7BC7E3148E64AD39E1 /* ProcessRunnerTests.swift */; };
 		1C2B4D17E814365889F847CA /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5AFC913CD2476947CAA048 /* ProjectViewController.swift */; };
 		1E4EAF5737CA5A801A30965E /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B8E679A3BEA53C6A6764CB /* XcodeCommand.swift */; };
 		2344326BDB2BA918039074D5 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2301D103F3056B6F9E2C2E8A /* ProjectInfo.swift */; };
@@ -45,7 +52,25 @@
 		F19DAA76C7C1B1E8FDD65F9E /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583D28F8D69380D2DA9AA7FB /* DropTargetView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DFAC54EC022B5FA0CE9E7935 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B9E803E29E1DB6300DFC001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B9E804529E1DB6300DFC001;
+			remoteInfo = FrameGen;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		400431A229984A2BA6021A3A /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
+		6559978338F272BEE8F5BEE0 /* ProjectInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoTests.swift; sourceTree = "<group>"; };
+		C99569F0C0D2242246D1458D /* XcodeCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommandTests.swift; sourceTree = "<group>"; };
+		76E9A0DCFA013DC175158D45 /* BuildStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildStateTests.swift; sourceTree = "<group>"; };
+		E27F8FBFB4AC5D119EA82AD2 /* ProjectLocatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLocatorTests.swift; sourceTree = "<group>"; };
+		F45CABAA2BB083405EBA03BD /* XCFrameworkBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCFrameworkBuilderTests.swift; sourceTree = "<group>"; };
+		5C7D1B7BC7E3148E64AD39E1 /* ProcessRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessRunnerTests.swift; sourceTree = "<group>"; };
+		6F9A1917669D5240DD64C7D3 /* FrameGenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrameGenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01A165050B2E052A7F7EF7E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
 		02B7A6B784EA7222D67C3D67 /* RecentProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentProjectCellView.swift"; sourceTree = "<group>"; };
 		0F0109521FC69BF5C9CCA7D5 /* XCFrameworkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCFrameworkBuilder.swift"; sourceTree = "<group>"; };
@@ -88,6 +113,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0B0976A84F3A3080B1A0C9FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4B9E804329E1DB6300DFC001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -98,6 +130,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04FD085B5B8E47DAD5FC6F22 /* FrameGenTests */ = {
+			isa = PBXGroup;
+			children = (
+				400431A229984A2BA6021A3A /* TestSupport.swift */,
+				6559978338F272BEE8F5BEE0 /* ProjectInfoTests.swift */,
+				C99569F0C0D2242246D1458D /* XcodeCommandTests.swift */,
+				76E9A0DCFA013DC175158D45 /* BuildStateTests.swift */,
+				E27F8FBFB4AC5D119EA82AD2 /* ProjectLocatorTests.swift */,
+				F45CABAA2BB083405EBA03BD /* XCFrameworkBuilderTests.swift */,
+				5C7D1B7BC7E3148E64AD39E1 /* ProcessRunnerTests.swift */,
+			);
+			path = FrameGenTests;
+			sourceTree = "<group>";
+		};
 		4B9E804829E1DB6300DFC001 /* FrameGen */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9E804829E1DB6300DFC001 /* FrameGen */,
+				04FD085B5B8E47DAD5FC6F22 /* FrameGenTests */,
 				4B9E804729E1DB6300DFC001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -219,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9E804629E1DB6300DFC001 /* FrameGen.app */,
+				6F9A1917669D5240DD64C7D3 /* FrameGenTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -226,6 +274,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3D43AFCF71BAC5808E8553C9 /* FrameGenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00ED3C2737010EC9CD749A93 /* Build configuration list for PBXNativeTarget "FrameGenTests" */;
+			buildPhases = (
+				C1D5A675EB10CD4EBD4D6C18 /* Sources */,
+				0B0976A84F3A3080B1A0C9FB /* Frameworks */,
+				8772E477F959EAB55992157A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				151FDAAC81FA51443326CBBC /* PBXTargetDependency */,
+			);
+			name = FrameGenTests;
+			packageProductDependencies = (
+			);
+			productName = FrameGenTests;
+			productReference = 6F9A1917669D5240DD64C7D3 /* FrameGenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4B9E804529E1DB6300DFC001 /* FrameGen */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B9E805529E1DB6400DFC001 /* Build configuration list for PBXNativeTarget "FrameGen" */;
@@ -259,6 +327,10 @@
 					4B9E804529E1DB6300DFC001 = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					3D43AFCF71BAC5808E8553C9 = {
+						CreatedOnToolsVersion = 27.1;
+						TestTargetID = 4B9E804529E1DB6300DFC001;
+					};
 				};
 			};
 			buildConfigurationList = 4B9E804129E1DB6300DFC001 /* Build configuration list for PBXProject "FrameGen" */;
@@ -278,11 +350,19 @@
 			projectRoot = "";
 			targets = (
 				4B9E804529E1DB6300DFC001 /* FrameGen */,
+				3D43AFCF71BAC5808E8553C9 /* FrameGenTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8772E477F959EAB55992157A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4B9E804429E1DB6300DFC001 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -294,6 +374,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C1D5A675EB10CD4EBD4D6C18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				489D4094B3E6E7371963AF3C /* TestSupport.swift in Sources */,
+				FB936CD51DB1A7AA4E66A812 /* ProjectInfoTests.swift in Sources */,
+				8F8E65782BAD13F02DA168C3 /* XcodeCommandTests.swift in Sources */,
+				269B226DA50FBD34ADC50D92 /* BuildStateTests.swift in Sources */,
+				94C9FB2B1653047CD3D88951 /* ProjectLocatorTests.swift in Sources */,
+				50EBD5583671FEDD263C30B8 /* XCFrameworkBuilderTests.swift in Sources */,
+				68945E8C52E8DFDA51A444BB /* ProcessRunnerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4B9E804229E1DB6300DFC001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,7 +432,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		151FDAAC81FA51443326CBBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4B9E804529E1DB6300DFC001 /* FrameGen */;
+			targetProxy = DFAC54EC022B5FA0CE9E7935 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		38928D5A7559732E301B8C90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8AD8N54BY6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.ramiz-kichibekov.frameGenTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FrameGen.app/Contents/MacOS/FrameGen";
+			};
+			name = Debug;
+		};
+		32C9FB063D3A950B3809FAB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8AD8N54BY6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.ramiz-kichibekov.frameGenTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FrameGen.app/Contents/MacOS/FrameGen";
+			};
+			name = Release;
+		};
 		4B9E805329E1DB6400DFC001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -527,6 +669,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		00ED3C2737010EC9CD749A93 /* Build configuration list for PBXNativeTarget "FrameGenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38928D5A7559732E301B8C90 /* Debug */,
+				32C9FB063D3A950B3809FAB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4B9E804129E1DB6300DFC001 /* Build configuration list for PBXProject "FrameGen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
