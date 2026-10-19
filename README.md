@@ -24,6 +24,16 @@ Supported platforms: iOS, iOS Simulator and Mac Catalyst.
 
 <img src="image/result.png" width="600" alt="Result with files, checksum and binaryTarget snippet">
 
+## Install
+
+With [Homebrew](https://brew.sh):
+
+```bash
+brew install --cask ramiz69/tap/framegen
+```
+
+Or download `FrameGen-<version>.zip` from [Releases](https://github.com/Ramiz69/FrameGen/releases), unzip it and move FrameGen to Applications. Releases are signed with a Developer ID and notarized by Apple.
+
 ## Requirements
 
 - A Mac with Apple silicon running macOS 27 or later.
@@ -76,7 +86,7 @@ xcodebuild test -project FrameGen.xcodeproj -scheme FrameGen -destination 'platf
 
 CI runs the same command on every pull request to `main` (see `.github/workflows/ci.yml`).
 
-The app runs `xcodebuild` on your projects, so it can't use the App Sandbox. That also means it can't ship on the Mac App Store. Distribute it signed with a Developer ID and notarized.
+The app runs `xcodebuild` on your projects, so it can't use the App Sandbox. That also means it can't ship on the Mac App Store; releases are signed with a Developer ID and notarized instead. See [docs/RELEASING.md](docs/RELEASING.md) for the release process.
 
 ## Architecture
 
