@@ -48,23 +48,11 @@ enum XCFrameworkBuilder {
     struct Summary {
         let plan: Plan
         let checksum: String
+        let packageSnippet: String
+        let zipSize: Int64
         let librariesWithoutPrivacyManifest: [String]
-
-        var message: String {
-            var lines = ["\(plan.xcframeworkURL.lastPathComponent) was created successfully.",
-                         "",
-                         "SwiftPM checksum: \(checksum)",
-                         "The binaryTarget snippet was saved to \(plan.snippetURL.lastPathComponent)."]
-            if !librariesWithoutPrivacyManifest.isEmpty {
-                lines += ["",
-                          "Warning: PrivacyInfo.xcprivacy is missing in \(librariesWithoutPrivacyManifest.joined(separator: ", ")). "
-                          + "Apple requires privacy manifests for commonly used third-party SDKs."]
-            }
-
-            return lines.joined(separator: "\n")
-        }
     }
-
+    
     // MARK: - Public methods
 
     /// Finds the framework and its dSYM in every archive and removes stale output,
@@ -110,14 +98,17 @@ enum XCFrameworkBuilder {
     /// Computes the SwiftPM checksum of the zip, checks privacy manifests and writes the `binaryTarget` snippet.
     static func finalize(_ plan: Plan) throws -> Summary {
         let checksum = try checksum(of: plan.zipURL)
-        try packageSnippet(name: plan.frameworkName, zipName: plan.zipURL.lastPathComponent, checksum: checksum)
-            .write(to: plan.snippetURL, atomically: true, encoding: .utf8)
-
+        let snippet = packageSnippet(name: plan.frameworkName, zipName: plan.zipURL.lastPathComponent, checksum: checksum)
+        try snippet.write(to: plan.snippetURL, atomically: true, encoding: .utf8)
+        let zipSize = (try? plan.zipURL.resourceValues(forKeys: [.fileSizeKey]).fileSize).map(Int64.init) ?? .zero
+        
         return Summary(plan: plan,
                        checksum: checksum,
+                       packageSnippet: snippet,
+                       zipSize: zipSize,
                        librariesWithoutPrivacyManifest: librariesWithoutPrivacyManifest(in: plan.xcframeworkURL))
     }
-
+    
     // MARK: - Private methods
 
     /// SwiftPM's checksum is the SHA-256 of the archive, the same value `swift package compute-checksum` prints.
