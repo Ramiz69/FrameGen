@@ -2,6 +2,8 @@
 
 FrameGen ships outside the Mac App Store: it runs `xcodebuild`, so it can't use the App Sandbox. A release is a Developer ID–signed, notarized `FrameGen-<version>.zip` attached to a GitHub release. The Homebrew cask in [Ramiz69/homebrew-tap](https://github.com/Ramiz69/homebrew-tap) points to that zip.
 
+The zip contains `FrameGen.app` with the `framegen` command-line tool in `Contents/Helpers`. Xcode signs the tool with the app (hardened runtime, Developer ID), so notarizing the app covers it. The cask links it into the Homebrew `bin` folder with its `binary` stanza. `scripts/release.sh` checks that the tool is present, arm64-only, signed with the hardened runtime and reports the release version.
+
 ```
 git tag v2.1 ──▶ .github/workflows/release.yml
                    ├─ scripts/release.sh 2.1     archive → Developer ID export → notarize → staple → zip

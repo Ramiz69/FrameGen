@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import FrameGenKit
 
 /// The start screen: what FrameGen does, how to open a project, and the recent projects.
 final class WelcomeViewController: NSViewController {
@@ -16,10 +17,10 @@ final class WelcomeViewController: NSViewController {
     private let workspace: Workspace
     private let openProject: (URL) -> Void
     private var observation: ObservationLoop?
-    private var recentProjects: [URL] = []
+    private var recentProjects: [ProjectContainer] = []
 
     private let tableView = NSTableView()
-    private let emptyLabel = NSTextField.text("No Recent Projects", font: .preferred(.title3), color: .tertiaryLabelColor)
+    private let emptyLabel = NSTextField.text(String(localized: "No Recent Projects"), font: .preferred(.title3), color: .tertiaryLabelColor)
 
     // MARK: - Initial methods
 
@@ -85,12 +86,12 @@ final class WelcomeViewController: NSViewController {
         icon.setAccessibilityElement(false)
 
         let title = NSTextField.text("FrameGen", font: .preferred(.largeTitle, weight: .bold))
-        let subtitle = NSTextField.text("Turn an Xcode framework project into an XCFramework, a zip and a SwiftPM checksum.",
+        let subtitle = NSTextField.text(String(localized: "Turn an Xcode framework project into an XCFramework, a zip and a SwiftPM checksum."),
                                         font: .preferred(.body), color: .secondaryLabelColor, lines: 0)
         subtitle.alignment = .center
         subtitle.preferredMaxLayoutWidth = 300
 
-        let openButton = NSButton.push("Open Project…", target: nil, action: #selector(MainWindowController.openDocument(_:)))
+        let openButton = NSButton.push(String(localized: "Open Project…"), target: nil, action: #selector(MainWindowController.openDocument(_:)))
         // Return opens the selected recent project, so this button relies on ⌘O instead of a default key equivalent.
         openButton.bezelColor = .controlAccentColor
         openButton.controlSize = .large
@@ -113,7 +114,7 @@ final class WelcomeViewController: NSViewController {
 
     private func makeDropHint() -> NSView {
         let icon = NSImageView.symbol("arrow.down.doc", pointSize: 22, color: .secondaryLabelColor)
-        let label = NSTextField.text("or drop an .xcodeproj or its folder anywhere in this window",
+        let label = NSTextField.text(String(localized: "or drop an .xcodeproj or its folder anywhere in this window"),
                                      font: .preferred(.callout), color: .secondaryLabelColor, lines: 0)
         label.alignment = .center
         label.preferredMaxLayoutWidth = 220
@@ -136,7 +137,7 @@ final class WelcomeViewController: NSViewController {
     }
 
     private func makeRecentsPane() -> NSView {
-        let header = NSTextField.text("Recent Projects", font: .preferred(.headline), color: .secondaryLabelColor)
+        let header = NSTextField.text(String(localized: "Recent Projects"), font: .preferred(.headline), color: .secondaryLabelColor)
 
         let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("project"))
         tableView.addTableColumn(column)
@@ -149,7 +150,7 @@ final class WelcomeViewController: NSViewController {
         tableView.target = self
         tableView.doubleAction = #selector(openClickedProject(_:))
         tableView.menu = makeContextMenu()
-        tableView.setAccessibilityLabel("Recent projects")
+        tableView.setAccessibilityLabel(String(localized: "Recent projects"))
 
         let scrollView = NSScrollView()
         scrollView.documentView = tableView
@@ -177,10 +178,10 @@ final class WelcomeViewController: NSViewController {
 
     private func makeContextMenu() -> NSMenu {
         let menu = NSMenu()
-        menu.addItem(withTitle: "Open", action: #selector(openClickedProject(_:)), keyEquivalent: "")
-        menu.addItem(withTitle: "Show in Finder", action: #selector(showClickedProjectInFinder(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: String(localized: "Open"), action: #selector(openClickedProject(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: String(localized: "Show in Finder"), action: #selector(showClickedProjectInFinder(_:)), keyEquivalent: "")
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Remove from Recent Projects", action: #selector(removeClickedProject(_:)), keyEquivalent: "")
+        menu.addItem(withTitle: String(localized: "Remove from Recent Projects"), action: #selector(removeClickedProject(_:)), keyEquivalent: "")
         menu.items.forEach { $0.target = self }
 
         return menu
@@ -193,7 +194,7 @@ final class WelcomeViewController: NSViewController {
     }
 
     /// The right-clicked row for context menu actions, otherwise the selected one.
-    private var targetProject: URL? {
+    private var targetProject: ProjectContainer? {
         let row = tableView.clickedRow >= 0 ? tableView.clickedRow : tableView.selectedRow
 
         return recentProjects.indices.contains(row) ? recentProjects[row] : nil
@@ -203,23 +204,23 @@ final class WelcomeViewController: NSViewController {
 
     @objc
     private func openClickedProject(_ sender: Any?) {
-        guard let url = targetProject else { return }
+        guard let container = targetProject else { return }
 
-        openProject(url)
+        openProject(container.url)
     }
 
     @objc
     private func showClickedProjectInFinder(_ sender: Any?) {
-        guard let url = targetProject else { return }
+        guard let container = targetProject else { return }
 
-        NSWorkspace.shared.activateFileViewerSelecting([url])
+        NSWorkspace.shared.activateFileViewerSelecting([container.url])
     }
 
     @objc
     private func removeClickedProject(_ sender: Any?) {
-        guard let url = targetProject else { return }
+        guard let container = targetProject else { return }
 
-        workspace.removeRecentProject(url)
+        workspace.removeRecentProject(container)
     }
 
     override func keyDown(with event: NSEvent) {
@@ -246,7 +247,7 @@ extension WelcomeViewController: NSTableViewDataSource, NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let cell = tableView.makeView(withIdentifier: RecentProjectCellView.identifier, owner: self) as? RecentProjectCellView
             ?? RecentProjectCellView()
-        cell.configure(with: recentProjects[row])
+        cell.configure(with: recentProjects[row].url)
 
         return cell
     }

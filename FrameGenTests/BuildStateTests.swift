@@ -8,6 +8,7 @@
 
 import Foundation
 import Testing
+import FrameGenKit
 @testable import FrameGen
 
 @MainActor
@@ -75,6 +76,7 @@ struct BuildStateTests {
     func stepTitles() {
         #expect(BuildStep(kind: .archive(.iOSSimulator)).title == "Archive for iOS Simulator")
         #expect(BuildStep(kind: .archive(.macCatalyst)).failureTitle == "Archiving for Mac Catalyst failed")
+        #expect(BuildStep(kind: .sign).title == "Sign XCFramework")
     }
 
 }

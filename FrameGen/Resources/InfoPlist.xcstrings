@@ -1,0 +1,70 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSDesktopFolderUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FrameGen reads Xcode projects and saves built XCFrameworks in the folders you choose."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FrameGen читает проекты Xcode и сохраняет собранные XCFramework в выбранные вами папки."
+          }
+        }
+      }
+    },
+    "NSDocumentsFolderUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FrameGen reads Xcode projects and saves built XCFrameworks in the folders you choose."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FrameGen читает проекты Xcode и сохраняет собранные XCFramework в выбранные вами папки."
+          }
+        }
+      }
+    },
+    "NSDownloadsFolderUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FrameGen reads Xcode projects and saves built XCFrameworks in the folders you choose."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FrameGen читает проекты Xcode и сохраняет собранные XCFramework в выбранные вами папки."
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2023–2026 Ramiz Kichibekov. All rights reserved."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2023–2026 Рамиз Кичибеков. Все права защищены."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -9,4 +9,6 @@ xcuserdata/
 # Build products
 build/
 DerivedData/
+Packages/*/.build/
+*.profraw
 *.xcarchive

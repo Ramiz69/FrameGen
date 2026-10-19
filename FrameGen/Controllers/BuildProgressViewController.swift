@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import FrameGenKit
 
 /// Live progress of a build: the step list, the current xcodebuild action and the log.
 final class BuildProgressViewController: NSViewController {
@@ -50,17 +51,15 @@ final class BuildProgressViewController: NSViewController {
         activityLabel.lineBreakMode = .byTruncatingMiddle
         activityLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        stepRows = project.build.steps.map { _ in StepRowView() }
-        stepsSection.setRows(stepRows)
 
         logDisclosure.bezelStyle = .disclosure
         logDisclosure.setButtonType(.pushOnPushOff)
         logDisclosure.title = ""
         logDisclosure.target = self
         logDisclosure.action = #selector(toggleLog(_:))
-        logDisclosure.setAccessibilityLabel("Show build log")
-        let logTitle = NSTextField.text("Build Log", font: .preferred(.headline))
-        let copyLog = CopyButton(title: "Copy Log") { [weak self] in
+        logDisclosure.setAccessibilityLabel(String(localized: "Show build log"))
+        let logTitle = NSTextField.text(String(localized: "Build Log"), font: .preferred(.headline))
+        let copyLog = CopyButton(title: String(localized: "Copy Log")) { [weak self] in
             self?.project.build.log.joined(separator: "\n") ?? ""
         }
         copyLog.controlSize = .small
@@ -68,10 +67,10 @@ final class BuildProgressViewController: NSViewController {
         logHeightConstraint.isActive = true
         logView.isHidden = true
 
-        let stopButton = NSButton.push("Stop", symbol: "stop.fill", target: nil, action: #selector(MainWindowController.stopBuild(_:)))
+        let stopButton = NSButton.push(String(localized: "Stop"), symbol: "stop.fill", target: nil, action: #selector(MainWindowController.stopBuild(_:)))
         stopButton.controlSize = .large
         stopButton.keyEquivalent = "\u{1b}"
-        stopButton.toolTip = "Stop the build (⌘.)"
+        stopButton.toolTip = String(localized: "Stop the build (⌘.)")
 
         [header, activityLabel, stepsSection, logHeader, logView].forEach(contentView.stackView.addFullWidthArrangedSubview)
         contentView.stackView.setCustomSpacing(Metrics.spacing, after: header)
@@ -105,22 +104,30 @@ final class BuildProgressViewController: NSViewController {
 
     private func update() {
         let build = project.build
-        let platformCount = build.steps.count - 2
-        header.titleLabel.stringValue = "Building \(project.scheme ?? project.name)"
+        let platformCount = build.steps.filter { step in
+            if case .archive = step.kind { true } else { false }
+        }.count
+        header.titleLabel.stringValue = String(localized: "Building \(project.scheme ?? project.name)")
         activityLabel.stringValue = build.activity
         if !logView.isHidden {
             logView.update(lines: build.log)
         }
         updateClock()
-        header.subtitleLabel.stringValue = "\(project.configuration ?? "") · \(platformCount) platform\(platformCount == 1 ? "" : "s")"
+        let configuration = project.configuration ?? ""
+        header.subtitleLabel.stringValue = String(localized: "\(configuration) · \(platformCount) platforms")
     }
 
     private func updateClock() {
         let build = project.build
+        // Steps arrive with the pipeline's first event, after this screen is already shown.
+        if stepRows.count != build.steps.count {
+            stepRows = build.steps.map { _ in StepRowView() }
+            stepsSection.setRows(stepRows)
+        }
         for (row, step) in zip(stepRows, build.steps) {
             row.configure(with: step)
         }
-        view.window?.subtitle = "Building… \(Formatters.duration(build.duration))"
+        view.window?.subtitle = String(localized: "Building… \(Formatters.duration(build.duration))")
     }
 
     // MARK: - Actions
@@ -128,7 +135,7 @@ final class BuildProgressViewController: NSViewController {
     @objc
     private func toggleLog(_ sender: NSButton) {
         logView.isHidden = sender.state == .off
-        sender.setAccessibilityLabel(logView.isHidden ? "Show build log" : "Hide build log")
+        sender.setAccessibilityLabel(logView.isHidden ? String(localized: "Show build log") : String(localized: "Hide build log"))
         if !logView.isHidden {
             logView.update(lines: project.build.log)
         }

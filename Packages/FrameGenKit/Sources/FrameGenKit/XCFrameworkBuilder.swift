@@ -1,6 +1,6 @@
 //
 //  XCFrameworkBuilder.swift
-//  FrameGen
+//  FrameGenKit
 //
 //  Created by Рамиз Кичибеков on 19.10.2026.
 //  Copyright © 2026 Ramiz Kichibekov. All rights reserved.
@@ -9,14 +9,14 @@
 import CryptoKit
 import Foundation
 
-nonisolated enum XCFrameworkBuilderError: Error {
+public enum XCFrameworkBuilderError: Error, Equatable {
     case frameworkNotFound(archivePath: String)
     case mismatchedFrameworks(names: [String])
 }
 
 extension XCFrameworkBuilderError: LocalizedError {
 
-    nonisolated var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .frameworkNotFound(let archivePath):
             return "No framework was found in the archive at \(archivePath). Make sure the scheme builds a framework target."
@@ -28,29 +28,76 @@ extension XCFrameworkBuilderError: LocalizedError {
 }
 
 /// Turns the archives produced by `xcodebuild archive` into a distributable XCFramework.
-nonisolated enum XCFrameworkBuilder {
+public enum XCFrameworkBuilder {
 
     // MARK: - Properties
 
-    struct Slice: Sendable {
-        let frameworkURL: URL
-        let debugSymbolURLs: [URL]
+    public struct Slice: Equatable, Sendable {
+        public let frameworkURL: URL
+        public let debugSymbolURLs: [URL]
+        
+        public init(frameworkURL: URL, debugSymbolURLs: [URL]) {
+            self.frameworkURL = frameworkURL
+            self.debugSymbolURLs = debugSymbolURLs
+        }
     }
 
-    struct Plan: Sendable {
-        let frameworkName: String
-        let slices: [Slice]
-        let xcframeworkURL: URL
-        let zipURL: URL
-        let snippetURL: URL
+    public struct Plan: Equatable, Sendable {
+        public let frameworkName: String
+        public let slices: [Slice]
+        public let xcframeworkURL: URL
+        public let zipURL: URL
+        public let snippetURL: URL
+        
+        public init(frameworkName: String, slices: [Slice], xcframeworkURL: URL, zipURL: URL, snippetURL: URL) {
+            self.frameworkName = frameworkName
+            self.slices = slices
+            self.xcframeworkURL = xcframeworkURL
+            self.zipURL = zipURL
+            self.snippetURL = snippetURL
+        }
     }
 
-    struct Summary: Sendable {
-        let plan: Plan
-        let checksum: String
-        let packageSnippet: String
-        let zipSize: Int64
-        let librariesWithoutPrivacyManifest: [String]
+    public struct Summary: Equatable, Sendable {
+        public let plan: Plan
+        public let checksum: String
+        public let packageSnippet: String
+        /// `nil` until a download URL is known, then the snippet uses it instead of a placeholder.
+        public let downloadURL: URL?
+        public let zipSize: Int64
+        public let librariesWithoutPrivacyManifest: [String]
+        /// The name of the certificate the XCFramework is signed with, or `nil` when unsigned.
+        public let signedBy: String?
+        
+        public init(plan: Plan,
+                    checksum: String,
+                    packageSnippet: String,
+                    downloadURL: URL?,
+                    zipSize: Int64,
+                    librariesWithoutPrivacyManifest: [String],
+                    signedBy: String?) {
+            self.plan = plan
+            self.checksum = checksum
+            self.packageSnippet = packageSnippet
+            self.downloadURL = downloadURL
+            self.zipSize = zipSize
+            self.librariesWithoutPrivacyManifest = librariesWithoutPrivacyManifest
+            self.signedBy = signedBy
+        }
+        
+        /// Points the snippet, and the snippet file next to the zip, at the published download URL.
+        public func withDownloadURL(_ url: URL) throws -> Summary {
+            let snippet = XCFrameworkBuilder.packageSnippet(name: plan.frameworkName, url: url, checksum: checksum)
+            try snippet.write(to: plan.snippetURL, atomically: true, encoding: .utf8)
+            
+            return Summary(plan: plan,
+                           checksum: checksum,
+                           packageSnippet: snippet,
+                           downloadURL: url,
+                           zipSize: zipSize,
+                           librariesWithoutPrivacyManifest: librariesWithoutPrivacyManifest,
+                           signedBy: signedBy)
+        }
     }
     
     // MARK: - Public methods
@@ -58,7 +105,7 @@ nonisolated enum XCFrameworkBuilder {
     /// Finds the framework and its dSYM in every archive and removes stale output,
     /// because `xcodebuild -create-xcframework` refuses to overwrite an existing bundle.
     @concurrent
-    static func makePlan(archiveURLs: [URL], outputDirectoryURL: URL) async throws -> Plan {
+    public static func makePlan(archiveURLs: [URL], outputDirectoryURL: URL) async throws -> Plan {
         let fileManager = FileManager.default
         var slices: [Slice] = []
         var names: [String] = []
@@ -98,19 +145,35 @@ nonisolated enum XCFrameworkBuilder {
 
     /// Computes the SwiftPM checksum of the zip, checks privacy manifests and writes the `binaryTarget` snippet.
     @concurrent
-    static func finalize(_ plan: Plan) async throws -> Summary {
+    public static func finalize(_ plan: Plan, downloadURL: URL? = nil, signedBy: String? = nil) async throws -> Summary {
         let checksum = try checksum(of: plan.zipURL)
-        let snippet = packageSnippet(name: plan.frameworkName, zipName: plan.zipURL.lastPathComponent, checksum: checksum)
+        let snippet = packageSnippet(name: plan.frameworkName, url: downloadURL, checksum: checksum, zipName: plan.zipURL.lastPathComponent)
         try snippet.write(to: plan.snippetURL, atomically: true, encoding: .utf8)
         let zipSize = (try? plan.zipURL.resourceValues(forKeys: [.fileSizeKey]).fileSize).map(Int64.init) ?? .zero
-        
+
         return Summary(plan: plan,
                        checksum: checksum,
                        packageSnippet: snippet,
+                       downloadURL: downloadURL,
                        zipSize: zipSize,
-                       librariesWithoutPrivacyManifest: librariesWithoutPrivacyManifest(in: plan.xcframeworkURL))
+                       librariesWithoutPrivacyManifest: librariesWithoutPrivacyManifest(in: plan.xcframeworkURL),
+                       signedBy: signedBy)
     }
-    
+
+    /// The `.binaryTarget` declaration for Package.swift. Without a URL it points to a placeholder to replace.
+    public static func packageSnippet(name: String, url: URL?, checksum: String, zipName: String? = nil) -> String {
+        let location = url?.absoluteString ?? "https://example.com/\(zipName ?? name + ".xcframework.zip")"
+
+        return """
+        .binaryTarget(
+            name: "\(name)",
+            url: "\(location)",
+            checksum: "\(checksum)"
+        )
+
+        """
+    }
+
     // MARK: - Private methods
 
     /// SwiftPM's checksum is the SHA-256 of the archive, the same value `swift package compute-checksum` prints.
@@ -118,17 +181,6 @@ nonisolated enum XCFrameworkBuilder {
         let data = try Data(contentsOf: url, options: .mappedIfSafe)
 
         return SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-    }
-
-    private static func packageSnippet(name: String, zipName: String, checksum: String) -> String {
-        """
-        .binaryTarget(
-            name: "\(name)",
-            url: "https://example.com/\(zipName)",
-            checksum: "\(checksum)"
-        )
-
-        """
     }
 
     /// Returns the library identifiers (e.g. `ios-arm64`) whose framework has no `PrivacyInfo.xcprivacy`.

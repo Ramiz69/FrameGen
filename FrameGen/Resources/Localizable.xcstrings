@@ -1,0 +1,2032 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ is ready" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ готов"
+          }
+        }
+      }
+    },
+    "%@ zipped" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ в zip-архиве"
+          }
+        }
+      }
+    },
+    "%@ · %@ · %lld platforms" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %@ · %lld platform"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %@ · %lld platforms"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %@ · %lld платформы"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %@ · %lld платформ"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %@ · %lld платформа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %@ · %lld платформы"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%@ · %lld platforms" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %lld platform"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %lld platforms"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %lld платформы"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %lld платформ"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %lld платформа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%@ · %lld платформы"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@"
+          }
+        }
+      }
+    },
+    "%@.xcframework is ready" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@.xcframework готов"
+          }
+        }
+      }
+    },
+    "%lld platforms" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld platform"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld platforms"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld платформы"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld платформ"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld платформа"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld платформы"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "A project can override this in its Output section. Results go to a subfolder named after the project." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проект может переопределить это в разделе «Результат». Результаты сохраняются в подпапку с именем проекта."
+          }
+        }
+      }
+    },
+    "About %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О программе %@"
+          }
+        }
+      }
+    },
+    "Add the target to Package.swift. Private hosts need credentials in ~/.netrc for SwiftPM to download the zip." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавьте цель в Package.swift. Чтобы SwiftPM мог скачать zip-архив с закрытого хоста, укажите учетные данные в ~/.netrc."
+          }
+        }
+      }
+    },
+    "After building:" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "После сборки:"
+          }
+        }
+      }
+    },
+    "Apple TV devices" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройства Apple TV"
+          }
+        }
+      }
+    },
+    "Apple Vision Pro devices" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройства Apple Vision Pro"
+          }
+        }
+      }
+    },
+    "Apple Watch devices" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройства Apple Watch"
+          }
+        }
+      }
+    },
+    "Apps that embed the XCFramework can verify who built it. Apple requires signatures for commonly used SDKs. Signing needs a network connection for the timestamp." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложения, в которые встроен XCFramework, смогут проверить, кто его собрал. Apple требует подпись для распространенных SDK. Для получения метки времени при подписи нужно подключение к сети."
+          }
+        }
+      }
+    },
+    "Archive for %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архив для %@"
+          }
+        }
+      }
+    },
+    "Archives are needed only to rebuild the XCFramework by hand. dSYMs are already inside the XCFramework." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архивы нужны, только чтобы пересобрать XCFramework вручную. dSYM уже находятся внутри XCFramework."
+          }
+        }
+      }
+    },
+    "Archiving for %@ failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось создать архив для %@"
+          }
+        }
+      }
+    },
+    "Bitbucket Downloads" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitbucket Downloads"
+          }
+        }
+      }
+    },
+    "Bring All to Front" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все окна — на передний план"
+          }
+        }
+      }
+    },
+    "Build" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка"
+          }
+        }
+      }
+    },
+    "Build Again" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собрать снова"
+          }
+        }
+      }
+    },
+    "Build Log" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Журнал сборки"
+          }
+        }
+      }
+    },
+    "Build XCFramework" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собрать XCFramework"
+          }
+        }
+      }
+    },
+    "Build log" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Журнал сборки"
+          }
+        }
+      }
+    },
+    "Build the XCFramework (⌘B)" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собрать XCFramework (⌘B)"
+          }
+        }
+      }
+    },
+    "Building" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Идет сборка"
+          }
+        }
+      }
+    },
+    "Building %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка %@"
+          }
+        }
+      }
+    },
+    "Building… %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка… %@"
+          }
+        }
+      }
+    },
+    "Built in %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собрано за %@"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отменить"
+          }
+        }
+      }
+    },
+    "Checksum" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контрольная сумма"
+          }
+        }
+      }
+    },
+    "Choose" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать"
+          }
+        }
+      }
+    },
+    "Choose Output Folder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать папку результатов"
+          }
+        }
+      }
+    },
+    "Choose a Folder for Results" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите папку для результатов"
+          }
+        }
+      }
+    },
+    "Choose an .xcodeproj or .xcworkspace, or the folder that contains it." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите .xcodeproj или .xcworkspace либо папку, в которой он находится."
+          }
+        }
+      }
+    },
+    "Choose an Xcode project, a workspace or a folder that contains one." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите проект Xcode, рабочее пространство или папку, в которой они находятся."
+          }
+        }
+      }
+    },
+    "Choose…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать…"
+          }
+        }
+      }
+    },
+    "Clear Menu" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить меню"
+          }
+        }
+      }
+    },
+    "Close Project" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть проект"
+          }
+        }
+      }
+    },
+    "Close Window" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть окно"
+          }
+        }
+      }
+    },
+    "Close the project and show recent projects (⇧⌘W)" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть проект и показать недавние проекты (⇧⌘W)"
+          }
+        }
+      }
+    },
+    "Configuration" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Конфигурация"
+          }
+        }
+      }
+    },
+    "Contains the .xcframework, its zip archive and a SwiftPM binaryTarget snippet. Intermediate archives go to the Archives subfolder." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Содержит .xcframework, его zip-архив и фрагмент binaryTarget для SwiftPM. Промежуточные архивы сохраняются в подпапку Archives."
+          }
+        }
+      }
+    },
+    "Copied" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировано"
+          }
+        }
+      }
+    },
+    "Copied to the clipboard" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировано в буфер обмена"
+          }
+        }
+      }
+    },
+    "Copy" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать"
+          }
+        }
+      }
+    },
+    "Copy Build Command" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать команду сборки"
+          }
+        }
+      }
+    },
+    "Copy Command" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать команду"
+          }
+        }
+      }
+    },
+    "Copy Log" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать журнал"
+          }
+        }
+      }
+    },
+    "Copy Snippet" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать фрагмент"
+          }
+        }
+      }
+    },
+    "Copy URL" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать URL"
+          }
+        }
+      }
+    },
+    "Copy the equivalent framegen command for CI (⌥⌘C)" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировать аналогичную команду framegen для CI (⌥⌘C)"
+          }
+        }
+      }
+    },
+    "Couldn’t read the project" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось прочитать проект"
+          }
+        }
+      }
+    },
+    "Couldn’t read the scheme’s build settings" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось прочитать настройки сборки схемы"
+          }
+        }
+      }
+    },
+    "Create XCFramework" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создание XCFramework"
+          }
+        }
+      }
+    },
+    "Create as a draft" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать как черновик"
+          }
+        }
+      }
+    },
+    "Creating the XCFramework failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось создать XCFramework"
+          }
+        }
+      }
+    },
+    "Custom command" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Своя команда"
+          }
+        }
+      }
+    },
+    "Cut" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вырезать"
+          }
+        }
+      }
+    },
+    "Detecting supported platforms…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Определение поддерживаемых платформ…"
+          }
+        }
+      }
+    },
+    "Distribution" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Распространение"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
+          }
+        }
+      }
+    },
+    "Don’t Sign" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не подписывать"
+          }
+        }
+      }
+    },
+    "Download URL" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL для загрузки"
+          }
+        }
+      }
+    },
+    "Draft" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Черновик"
+          }
+        }
+      }
+    },
+    "Each platform is archived separately and becomes one slice of the XCFramework." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждая платформа архивируется отдельно и становится одним срезом XCFramework."
+          }
+        }
+      }
+    },
+    "Each platform is archived separately and becomes one slice of the XCFramework. Not supported by this scheme: %@." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждая платформа архивируется отдельно и становится одним срезом XCFramework. Не поддерживаются этой схемой: %@."
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правка"
+          }
+        }
+      }
+    },
+    "Edit Options" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить параметры"
+          }
+        }
+      }
+    },
+    "Errors" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибки"
+          }
+        }
+      }
+    },
+    "Failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка"
+          }
+        }
+      }
+    },
+    "File" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл"
+          }
+        }
+      }
+    },
+    "Files" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файлы"
+          }
+        }
+      }
+    },
+    "Fill from Preset" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заполнить из шаблона"
+          }
+        }
+      }
+    },
+    "Folder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка"
+          }
+        }
+      }
+    },
+    "GitHub Release" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Релиз GitHub"
+          }
+        }
+      }
+    },
+    "GitLab Package Registry" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitLab Package Registry"
+          }
+        }
+      }
+    },
+    "Help" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Справка"
+          }
+        }
+      }
+    },
+    "Hide %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть %@"
+          }
+        }
+      }
+    },
+    "Hide Others" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть остальные"
+          }
+        }
+      }
+    },
+    "Hide build log" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть журнал сборки"
+          }
+        }
+      }
+    },
+    "Identity" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сертификат"
+          }
+        }
+      }
+    },
+    "In a shared folder:" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В общей папке:"
+          }
+        }
+      }
+    },
+    "In a “build” folder next to the project" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В папке «build» рядом с проектом"
+          }
+        }
+      }
+    },
+    "Keep intermediate archives" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранять промежуточные архивы"
+          }
+        }
+      }
+    },
+    "Learn About Privacy Manifests" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О манифестах конфиденциальности"
+          }
+        }
+      }
+    },
+    "Minimize" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свернуть"
+          }
+        }
+      }
+    },
+    "Native Mac apps" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нативные приложения для Mac"
+          }
+        }
+      }
+    },
+    "No GitHub remote" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет удаленного репозитория GitHub"
+          }
+        }
+      }
+    },
+    "No Recent Projects" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет недавних проектов"
+          }
+        }
+      }
+    },
+    "No folder chosen" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка не выбрана"
+          }
+        }
+      }
+    },
+    "No privacy manifest" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет манифеста конфиденциальности"
+          }
+        }
+      }
+    },
+    "No signing certificates were found in the keychain." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В связке ключей не найдено сертификатов подписи."
+          }
+        }
+      }
+    },
+    "Notify me when a build finishes in the background" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомлять о завершении сборки в фоне"
+          }
+        }
+      }
+    },
+    "Open" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть"
+          }
+        }
+      }
+    },
+    "Open Project" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть проект"
+          }
+        }
+      }
+    },
+    "Open Project…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть проект…"
+          }
+        }
+      }
+    },
+    "Open Recent" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть недавние"
+          }
+        }
+      }
+    },
+    "Optional; fills the binaryTarget snippet" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Необязательно; подставляется во фрагмент binaryTarget"
+          }
+        }
+      }
+    },
+    "Output" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результат"
+          }
+        }
+      }
+    },
+    "Output folder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Папка результатов"
+          }
+        }
+      }
+    },
+    "Packaging the XCFramework failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось упаковать XCFramework"
+          }
+        }
+      }
+    },
+    "Paste" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставить"
+          }
+        }
+      }
+    },
+    "Platforms" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платформы"
+          }
+        }
+      }
+    },
+    "Platforms appear once the scheme’s build settings are read." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платформы появятся после чтения настроек сборки схемы."
+          }
+        }
+      }
+    },
+    "Preparing…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подготовка…"
+          }
+        }
+      }
+    },
+    "PrivacyInfo.xcprivacy is missing in %@. Apple requires privacy manifests in commonly used third-party SDKs." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В %@ отсутствует PrivacyInfo.xcprivacy. Apple требует манифест конфиденциальности в распространенных сторонних SDK."
+          }
+        }
+      }
+    },
+    "Product" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продукт"
+          }
+        }
+      }
+    },
+    "Projects" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проекты"
+          }
+        }
+      }
+    },
+    "Publish" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опубликовать"
+          }
+        }
+      }
+    },
+    "Publish to GitHub" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опубликовать на GitHub"
+          }
+        }
+      }
+    },
+    "Published" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опубликовано"
+          }
+        }
+      }
+    },
+    "Publishing failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось опубликовать"
+          }
+        }
+      }
+    },
+    "Quit %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершить %@"
+          }
+        }
+      }
+    },
+    "Reading schemes and configurations…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтение схем и конфигураций…"
+          }
+        }
+      }
+    },
+    "Recent Projects" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недавние проекты"
+          }
+        }
+      }
+    },
+    "Recent projects" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Недавние проекты"
+          }
+        }
+      }
+    },
+    "Redo" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторить"
+          }
+        }
+      }
+    },
+    "Release tag" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тег релиза"
+          }
+        }
+      }
+    },
+    "Remove from Recent Projects" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить из недавних проектов"
+          }
+        }
+      }
+    },
+    "Repository" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Репозиторий"
+          }
+        }
+      }
+    },
+    "Runs in zsh; {path} is the zip" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zsh; {path} — путь к zip"
+          }
+        }
+      }
+    },
+    "Save results:" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранять результаты:"
+          }
+        }
+      }
+    },
+    "Scheme" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Схема"
+          }
+        }
+      }
+    },
+    "Select All" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать все"
+          }
+        }
+      }
+    },
+    "Services" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Службы"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
+          }
+        }
+      }
+    },
+    "Settings…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки…"
+          }
+        }
+      }
+    },
+    "Shared output folder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Общая папка результатов"
+          }
+        }
+      }
+    },
+    "Show All" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все"
+          }
+        }
+      }
+    },
+    "Show Output in Finder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать результаты в Finder"
+          }
+        }
+      }
+    },
+    "Show build log" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать журнал сборки"
+          }
+        }
+      }
+    },
+    "Show in Finder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать в Finder"
+          }
+        }
+      }
+    },
+    "Show the XCFramework in Finder" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать XCFramework в Finder"
+          }
+        }
+      }
+    },
+    "Show the output folder in Finder (⇧⌘R)" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать папку результатов в Finder (⇧⌘R)"
+          }
+        }
+      }
+    },
+    "Sign XCFramework" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписать XCFramework"
+          }
+        }
+      }
+    },
+    "Signing" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подпись"
+          }
+        }
+      }
+    },
+    "Signing identity" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сертификат подписи"
+          }
+        }
+      }
+    },
+    "Signing the XCFramework failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось подписать XCFramework"
+          }
+        }
+      }
+    },
+    "Simulator on Apple silicon and Intel Macs" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симулятор на Mac с Apple silicon и Intel"
+          }
+        }
+      }
+    },
+    "Stop" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить"
+          }
+        }
+      }
+    },
+    "Stop and Close" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить и закрыть"
+          }
+        }
+      }
+    },
+    "Stop and Open" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить и открыть"
+          }
+        }
+      }
+    },
+    "Stop and Quit" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить и завершить"
+          }
+        }
+      }
+    },
+    "Stop building %@?" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить сборку %@?"
+          }
+        }
+      }
+    },
+    "Stop the build (⌘.)" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить сборку (⌘.)"
+          }
+        }
+      }
+    },
+    "Succeeded" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Успешно"
+          }
+        }
+      }
+    },
+    "Swift Package Manager" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swift Package Manager"
+          }
+        }
+      }
+    },
+    "SwiftPM can download the zip from %@. The snippet below uses this URL." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftPM может скачать zip-архив с %@. Этот URL используется во фрагменте ниже."
+          }
+        }
+      }
+    },
+    "The XCFramework build in progress will be stopped." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущая сборка XCFramework будет остановлена."
+          }
+        }
+      }
+    },
+    "The build couldn’t start" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось начать сборку"
+          }
+        }
+      }
+    },
+    "The build of %@ failed. Open FrameGen to see the errors." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка %@ завершилась с ошибкой. Откройте FrameGen, чтобы увидеть ошибки."
+          }
+        }
+      }
+    },
+    "The build of %@ finished." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сборка %@ завершена."
+          }
+        }
+      }
+    },
+    "The command exited with code %d. See the highlighted lines below or the full log." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Команда завершилась с кодом %d. См. выделенные строки ниже или полный журнал."
+          }
+        }
+      }
+    },
+    "The origin remote isn’t on github.com; GitHub CLI must be signed in to that host." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удаленный репозиторий origin находится не на github.com; в GitHub CLI нужно войти на этом хосте."
+          }
+        }
+      }
+    },
+    "The project has no shared or user schemes." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В проекте нет общих или пользовательских схем."
+          }
+        }
+      }
+    },
+    "The scheme “%@” doesn’t build for any platform FrameGen supports." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Схема «%@» не собирается ни для одной платформы, поддерживаемой FrameGen."
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторить попытку"
+          }
+        }
+      }
+    },
+    "Turn an Xcode framework project into an XCFramework, a zip and a SwiftPM checksum." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Превратите проект фреймворка Xcode в XCFramework, zip-архив и контрольную сумму для SwiftPM."
+          }
+        }
+      }
+    },
+    "Turn on at least one platform." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включите хотя бы одну платформу."
+          }
+        }
+      }
+    },
+    "Undo" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отменить"
+          }
+        }
+      }
+    },
+    "Upload command" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Команда загрузки"
+          }
+        }
+      }
+    },
+    "Upload manually" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузить вручную"
+          }
+        }
+      }
+    },
+    "Upload the zip anywhere SwiftPM can download it over HTTPS. Placeholders: {name}, {version}, {zip}." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузите zip-архив туда, откуда SwiftPM сможет скачать его по HTTPS. Подстановки: {name}, {version}, {zip}."
+          }
+        }
+      }
+    },
+    "Upload the zip, replace the URL in the snippet with its download link and add the target to Package.swift. Set a download URL or a publish destination in the project options to skip this step." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузите zip-архив, замените URL во фрагменте ссылкой для скачивания и добавьте цель в Package.swift. Чтобы пропустить этот шаг, укажите URL для загрузки или место публикации в параметрах проекта."
+          }
+        }
+      }
+    },
+    "Uploading…" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка…"
+          }
+        }
+      }
+    },
+    "Use Default" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По умолчанию"
+          }
+        }
+      }
+    },
+    "Use the location from Settings" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использовать папку из настроек"
+          }
+        }
+      }
+    },
+    "Used by {version} in URLs and release tags" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подставляется в {version} в URL и тегах релиза"
+          }
+        }
+      }
+    },
+    "Uses GitHub CLI (gh). The release is created if it doesn’t exist, otherwise the zip replaces its asset." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использует GitHub CLI (gh). Если релиза нет, он будет создан, иначе zip-архив заменит его файл."
+          }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия"
+          }
+        }
+      }
+    },
+    "Window" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окно"
+          }
+        }
+      }
+    },
+    "Works with GitLab, Bitbucket, S3, Artifactory, Nexus or any internal server. Values are shell-quoted; define tokens in ~/.zprofile. Placeholders: {name}, {version}, {zip}, {path}, {checksum}." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Работает с GitLab, Bitbucket, S3, Artifactory, Nexus и любым внутренним сервером. Значения экранируются для shell; токены задайте в ~/.zprofile. Подстановки: {name}, {version}, {zip}, {path}, {checksum}."
+          }
+        }
+      }
+    },
+    "Zip and compute checksum" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создание zip-архива и контрольной суммы"
+          }
+        }
+      }
+    },
+    "Zoom" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить масштаб"
+          }
+        }
+      }
+    },
+    "done" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "готово"
+          }
+        }
+      }
+    },
+    "failed" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ошибка"
+          }
+        }
+      }
+    },
+    "iOS Simulator" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симулятор iOS"
+          }
+        }
+      }
+    },
+    "iPad apps running on the Mac" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложения для iPad на Mac"
+          }
+        }
+      }
+    },
+    "iPhone and iPad devices" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Устройства iPhone и iPad"
+          }
+        }
+      }
+    },
+    "in progress" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "выполняется"
+          }
+        }
+      }
+    },
+    "or drop an .xcodeproj or its folder anywhere in this window" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "или перетащите .xcodeproj или его папку в любое место этого окна"
+          }
+        }
+      }
+    },
+    "signed by %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "подписано: %@"
+          }
+        }
+      }
+    },
+    "tvOS Simulator" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симулятор tvOS"
+          }
+        }
+      }
+    },
+    "visionOS Simulator" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симулятор visionOS"
+          }
+        }
+      }
+    },
+    "waiting" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ожидание"
+          }
+        }
+      }
+    },
+    "watchOS Simulator" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симулятор watchOS"
+          }
+        }
+      }
+    },
+    "xcodebuild could not read the project." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "xcodebuild не удалось прочитать проект."
+          }
+        }
+      }
+    },
+    "“%@” doesn’t contain an Xcode project or workspace." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "«%@» не содержит проекта Xcode или рабочего пространства."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

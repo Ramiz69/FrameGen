@@ -1,6 +1,6 @@
 //
 //  ProcessRunnerTests.swift
-//  FrameGenTests
+//  FrameGenKitTests
 //
 //  Created by Рамиз Кичибеков on 19.10.2026.
 //  Copyright © 2026 Ramiz Kichibekov. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Testing
 import Foundation
-@testable import FrameGen
+@testable import FrameGenKit
 
 @Suite struct ProcessRunnerTests {
 

@@ -6,48 +6,45 @@
 //  Copyright © 2026 Ramiz Kichibekov. All rights reserved.
 //
 
+import FrameGenKit
 import Foundation
 import Observation
 
-struct BuildStep: Identifiable {
-
-    enum Kind: Equatable {
-        case archive(Platform)
-        case createXCFramework
-        case package
-    }
-
+struct BuildStep {
+    
     enum Status: Equatable {
         case pending
         case running(since: Date)
         case succeeded(duration: TimeInterval)
         case failed
     }
-
-    let kind: Kind
+    
+    let kind: StepKind
     var status: Status = .pending
-
-    var id: String { title }
-
+    
     var title: String {
         switch kind {
         case .archive(let platform):
-            return "Archive for \(platform.title)"
+            return String(localized: "Archive for \(platform.title)")
         case .createXCFramework:
-            return "Create XCFramework"
+            return String(localized: "Create XCFramework")
+        case .sign:
+            return String(localized: "Sign XCFramework")
         case .package:
-            return "Zip and compute checksum"
+            return String(localized: "Zip and compute checksum")
         }
     }
-
+    
     var failureTitle: String {
         switch kind {
         case .archive(let platform):
-            return "Archiving for \(platform.title) failed"
+            return String(localized: "Archiving for \(platform.title) failed")
         case .createXCFramework:
-            return "Creating the XCFramework failed"
+            return String(localized: "Creating the XCFramework failed")
+        case .sign:
+            return String(localized: "Signing the XCFramework failed")
         case .package:
-            return "Packaging the XCFramework failed"
+            return String(localized: "Packaging the XCFramework failed")
         }
     }
 }
@@ -57,6 +54,13 @@ struct BuildFailure {
     let reason: String
     /// The `error:` lines of the log, or its tail when the tool printed none.
     let highlights: [String]
+}
+
+enum PublishState: Equatable {
+    case idle
+    case publishing
+    case published(URL)
+    case failed(String)
 }
 
 /// The progress and outcome of one XCFramework build.
@@ -73,6 +77,8 @@ final class BuildState {
     // MARK: - Properties
 
     var phase: Phase = .idle
+    /// Upload progress on the result screen; independent of the build itself.
+    var publishState: PublishState = .idle
     var steps: [BuildStep] = []
     /// The most recent xcodebuild action, e.g. "SwiftCompile normal arm64 Compiling Kit.swift".
     var activity = ""
@@ -96,8 +102,9 @@ final class BuildState {
 
     func start(steps: [BuildStep]) {
         self.steps = steps
+        publishState = .idle
         log = []
-        activity = "Preparing…"
+        activity = String(localized: "Preparing…")
         startDate = .now
         endDate = nil
         phase = .running
@@ -111,6 +118,7 @@ final class BuildState {
 
     func reset() {
         steps = []
+        publishState = .idle
         log = []
         activity = ""
         startDate = nil

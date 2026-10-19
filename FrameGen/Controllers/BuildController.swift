@@ -7,83 +7,89 @@
 //
 
 import AppKit
+import FrameGenKit
 
-/// Runs the build pipeline for a project: archive every platform, create the XCFramework,
-/// zip it and compute the SwiftPM checksum. Progress is published through `Project.build`.
+/// Runs `XCFrameworkPipeline` for a project and mirrors its events into `Project.build`,
+/// then publishes the result on request. The same pipeline powers the `framegen` tool.
 final class BuildController {
 
     // MARK: - Properties
 
     private var task: Task<Void, Never>?
+    private var publishTask: Task<Void, Never>?
+    private let notifier = BuildNotifier()
 
     // MARK: - Public methods
 
     func start(_ project: Project) {
-        guard project.canBuild, let scheme = project.scheme, let configuration = project.configuration else { return }
+        guard project.canBuild, let request = project.makeBuildRequest() else { return }
 
-        let platforms = project.selectedPlatforms
         let state = project.build
-        state.start(steps: platforms.map { BuildStep(kind: .archive($0)) }
-                    + [BuildStep(kind: .createXCFramework), BuildStep(kind: .package)])
+        state.start(steps: [])
+        notifier.requestAuthorizationIfNeeded()
         task = Task {
-            await run(project: project.fileURL,
-                      scheme: scheme,
-                      configuration: configuration,
-                      platforms: platforms,
-                      outputDirectory: project.outputDirectory,
-                      state: state)
+            await run(request, projectName: project.name, state: state)
             task = nil
         }
     }
 
     func cancel() {
         task?.cancel()
+        publishTask?.cancel()
+    }
+
+    func publish(_ project: Project) {
+        guard
+            case .succeeded(let summary) = project.build.phase,
+            let destination = project.publishDestination,
+            project.build.publishState != .publishing
+        else {
+            return
+        }
+
+        let state = project.build
+        let version = project.version
+        state.publishState = .publishing
+        publishTask = Task {
+            do {
+                let url = try await Publisher.publish(summary, version: version, to: destination) { state.appendLog($0) }
+                let updated = try summary.withDownloadURL(url)
+                state.finish(.succeeded(updated))
+                state.publishState = .published(url)
+            } catch is CancellationError {
+                state.publishState = .idle
+            } catch ProcessError.canceled {
+                state.publishState = .idle
+            } catch let ProcessError.failed(_, output) {
+                state.publishState = .failed(LogAnalyzer.highlights(in: output.components(separatedBy: .newlines), limit: 5)
+                    .joined(separator: "\n"))
+            } catch {
+                state.publishState = .failed(error.localizedDescription)
+            }
+            publishTask = nil
+        }
     }
 
     // MARK: - Private methods
 
-    private func run(project: URL,
-                     scheme: String,
-                     configuration: String,
-                     platforms: [Platform],
-                     outputDirectory: URL,
-                     state: BuildState) async {
-        let archivesDirectory = outputDirectory.appendingPathComponent("Archives", isDirectory: true)
-        var stepIndex = 0
+    private func run(_ request: BuildRequest, projectName: String, state: BuildState) async {
         do {
-            var archiveURLs: [URL] = []
-            for platform in platforms {
-                let archiveURL = archivesDirectory.appendingPathComponent("\(scheme)-\(platform.archiveSuffix).xcarchive")
-                try await perform(step: stepIndex, in: state) {
-                    try await self.stream(XcodeCommand.archive(project: project,
-                                                               scheme: scheme,
-                                                               configuration: configuration,
-                                                               platform: platform,
-                                                               archiveURL: archiveURL),
-                                          into: state)
+            let summary = try await XCFrameworkPipeline.run(request) { event in
+                switch event {
+                case .planned(let steps):
+                    state.steps = steps.map { BuildStep(kind: $0) }
+                case .stepStarted(let index):
+                    state.steps[index].status = .running(since: .now)
+                case let .stepFinished(index, duration):
+                    state.steps[index].status = .succeeded(duration: duration)
+                case .stepFailed(let index):
+                    state.steps[index].status = .failed
+                case .log(let line):
+                    state.appendLog(line)
                 }
-                archiveURLs.append(archiveURL)
-                stepIndex += 1
-            }
-
-            let plan = try await perform(step: stepIndex, in: state) {
-                let plan = try await XCFrameworkBuilder.makePlan(archiveURLs: archiveURLs, outputDirectoryURL: outputDirectory)
-                try await self.stream(XcodeCommand.createXCFramework(slices: plan.slices, output: plan.xcframeworkURL), into: state)
-
-                return plan
-            }
-            stepIndex += 1
-
-            let summary = try await perform(step: stepIndex, in: state) {
-                try await self.stream(XcodeCommand.zip(source: plan.xcframeworkURL, destination: plan.zipURL), into: state)
-
-                return try await XCFrameworkBuilder.finalize(plan)
-            }
-
-            if !Preferences.keepArchives {
-                try? FileManager.default.removeItem(at: archivesDirectory)
             }
             state.finish(.succeeded(summary))
+            notifier.notify(.succeeded(projectName: projectName, frameworkName: summary.plan.frameworkName))
             if Preferences.revealInFinder {
                 NSWorkspace.shared.activateFileViewerSelecting([summary.plan.xcframeworkURL])
             }
@@ -91,48 +97,22 @@ final class BuildController {
             state.reset()
         } catch ProcessError.canceled {
             state.reset()
+        } catch let error as PipelineError {
+            let step = BuildStep(kind: error.step)
+            let reason: String
+            if case let ProcessError.failed(status, _) = error.underlying {
+                reason = String(localized: "The command exited with code \(status). See the highlighted lines below or the full log.")
+            } else {
+                reason = error.underlying.localizedDescription
+            }
+            state.finish(.failed(BuildFailure(title: step.failureTitle, reason: reason, highlights: error.highlights)))
+            notifier.notify(.failed(projectName: projectName, title: step.failureTitle))
         } catch {
-            state.finish(.failed(Self.failure(for: error, step: state.steps[stepIndex], log: state.log)))
+            state.finish(.failed(BuildFailure(title: String(localized: "The build couldn’t start"),
+                                              reason: error.localizedDescription,
+                                              highlights: [])))
         }
         NSApp.requestUserAttention(.informationalRequest)
-    }
-
-    private func perform<T>(step index: Int, in state: BuildState, _ body: () async throws -> T) async throws -> T {
-        let start = Date.now
-        state.steps[index].status = .running(since: start)
-        do {
-            let result = try await body()
-            state.steps[index].status = .succeeded(duration: Date.now.timeIntervalSince(start))
-
-            return result
-        } catch {
-            state.steps[index].status = Task.isCancelled ? .pending : .failed
-            throw error
-        }
-    }
-
-    private func stream(_ runner: ProcessRunner, into state: BuildState) async throws {
-        for try await line in runner.lines() {
-            state.appendLog(line)
-        }
-        try Task.checkCancellation()
-    }
-
-    private static func failure(for error: Error, step: BuildStep, log: [String]) -> BuildFailure {
-        let reason: String
-        if case let ProcessError.failed(status, _) = error {
-            reason = "The command exited with code \(status). See the highlighted lines below or the full log."
-        } else {
-            reason = error.localizedDescription
-        }
-
-        var seen = Set<String>()
-        let errors = log
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { $0.contains("error:") && seen.insert($0).inserted }
-        let highlights = errors.isEmpty ? log.suffix(20).filter { !$0.isEmpty } : Array(errors.prefix(20))
-
-        return BuildFailure(title: step.failureTitle, reason: reason, highlights: highlights)
     }
 
 }

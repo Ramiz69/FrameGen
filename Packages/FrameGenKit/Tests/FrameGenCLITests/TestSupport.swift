@@ -1,6 +1,6 @@
 //
 //  TestSupport.swift
-//  FrameGenTests
+//  FrameGenCLITests
 //
 //  Created by Рамиз Кичибеков on 19.10.2026.
 //  Copyright © 2026 Ramiz Kichibekov. All rights reserved.
@@ -22,7 +22,7 @@ final class TemporaryDirectory {
 
             return URL(fileURLWithPath: String(cString: pointer), isDirectory: true)
         } ?? root
-        url = canonicalRoot.appendingPathComponent("FrameGenTests-\(UUID().uuidString)", isDirectory: true)
+        url = canonicalRoot.appendingPathComponent("FrameGenCLITests-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
     }
     
@@ -49,4 +49,38 @@ final class TemporaryDirectory {
         return file
     }
     
+}
+
+/// Collects the lines `FrameGenTool.run` prints, from whichever thread prints them.
+final class OutputRecorder: @unchecked Sendable {
+
+    private let lock = NSLock()
+    private var storage: [String] = []
+
+    var lines: [String] {
+        lock.withLock { storage }
+    }
+
+    var text: String {
+        lines.joined(separator: "\n")
+    }
+
+    func record(_ line: String) {
+        lock.withLock { storage.append(line) }
+    }
+
+}
+
+/// Runs `git` in a folder, for tests that need a repository with an origin remote.
+func runGit(_ arguments: [String], in directory: URL) throws {
+    let process = Process()
+    process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+    process.arguments = ["-C", directory.path] + arguments
+    process.standardOutput = FileHandle.nullDevice
+    process.standardError = FileHandle.nullDevice
+    try process.run()
+    process.waitUntilExit()
+    guard process.terminationStatus == 0 else {
+        throw CocoaError(.executableLoad, userInfo: [NSLocalizedDescriptionKey: "git \(arguments.joined(separator: " ")) failed"])
+    }
 }

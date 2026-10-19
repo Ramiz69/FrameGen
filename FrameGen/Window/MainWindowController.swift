@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import FrameGenKit
 
 /// Owns the main window, its toolbar and the project commands from the menu bar.
 /// It sits in the responder chain of the window, so menu items reach it whatever view has focus.
@@ -57,7 +58,7 @@ final class MainWindowController: NSWindowController {
     // MARK: - Public methods
 
     func openProject(at url: URL) {
-        guard confirmStoppingBuild(action: "Open") else { return }
+        guard confirmStoppingBuild(action: String(localized: "Stop and Open")) else { return }
 
         do {
             buildController.cancel()
@@ -68,15 +69,16 @@ final class MainWindowController: NSWindowController {
     }
 
     /// Asks before interrupting a running build; returns whether the caller may continue.
+    /// `action` is the confirm button title, e.g. “Stop and Quit”.
     func confirmStoppingBuild(action: String) -> Bool {
         guard let project, project.build.isRunning else { return true }
 
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = "Stop building \(project.name)?"
-        alert.informativeText = "The XCFramework build in progress will be stopped."
-        alert.addButton(withTitle: "Stop and \(action)")
-        alert.addButton(withTitle: "Cancel")
+        alert.messageText = String(localized: "Stop building \(project.name)?")
+        alert.informativeText = String(localized: "The XCFramework build in progress will be stopped.")
+        alert.addButton(withTitle: action)
+        alert.addButton(withTitle: String(localized: "Cancel"))
         guard alert.runModal() == .alertFirstButtonReturn else { return false }
 
         buildController.cancel()
@@ -88,7 +90,7 @@ final class MainWindowController: NSWindowController {
 
     @objc
     func openDocument(_ sender: Any?) {
-        guard let url = ProjectLocator.chooseProject() else { return }
+        guard let url = ProjectPicker.chooseProject() else { return }
 
         openProject(at: url)
     }
@@ -107,7 +109,7 @@ final class MainWindowController: NSWindowController {
 
     @objc
     func closeProject(_ sender: Any?) {
-        guard confirmStoppingBuild(action: "Close") else { return }
+        guard confirmStoppingBuild(action: String(localized: "Stop and Close")) else { return }
 
         workspace.closeProject()
     }
@@ -124,6 +126,21 @@ final class MainWindowController: NSWindowController {
         buildController.cancel()
     }
 
+    @objc
+    func copyBuildCommand(_ sender: Any?) {
+        guard let command = project?.buildCommandLine() else { return }
+        
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(command, forType: .string)
+    }
+    
+    @objc
+    func publishXCFramework(_ sender: Any?) {
+        guard let project else { return }
+        
+        buildController.publish(project)
+    }
+    
     @objc
     func showOutputInFinder(_ sender: Any?) {
         guard let project else { return }
@@ -142,8 +159,8 @@ final class MainWindowController: NSWindowController {
 
         if let project {
             window.title = project.name
-            window.subtitle = Formatters.path(project.fileURL.deletingLastPathComponent())
-            window.representedURL = project.fileURL
+            window.subtitle = Formatters.path(project.container.directoryURL)
+            window.representedURL = project.container.url
             // Read the build state so the toolbar re-validates when a build starts or ends.
             _ = project.canBuild
         } else {
@@ -160,6 +177,12 @@ final class MainWindowController: NSWindowController {
             return project != nil
         case #selector(buildXCFramework(_:)):
             return project?.canBuild == true
+        case #selector(copyBuildCommand(_:)):
+            return project?.makeBuildRequest() != nil
+        case #selector(publishXCFramework(_:)):
+            guard let project, case .succeeded = project.build.phase else { return false }
+            
+            return project.publishDestination != nil && project.build.publishState != .publishing
         case #selector(stopBuild(_:)):
             return project?.build.isRunning == true
         case #selector(clearRecentProjects(_:)):
@@ -202,17 +225,17 @@ extension MainWindowController: NSToolbarDelegate {
                  willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         switch itemIdentifier {
         case ToolbarItem.closeProject:
-            return item(itemIdentifier, label: "Projects", symbol: "chevron.backward",
-                        toolTip: "Close the project and show recent projects (⇧⌘W)", action: #selector(closeProject(_:)))
+            return item(itemIdentifier, label: String(localized: "Projects"), symbol: "chevron.backward",
+                        toolTip: String(localized: "Close the project and show recent projects (⇧⌘W)"), action: #selector(closeProject(_:)))
         case ToolbarItem.build:
-            return item(itemIdentifier, label: "Build", symbol: "play.fill",
-                        toolTip: "Build the XCFramework (⌘B)", action: #selector(buildXCFramework(_:)))
+            return item(itemIdentifier, label: String(localized: "Build"), symbol: "play.fill",
+                        toolTip: String(localized: "Build the XCFramework (⌘B)"), action: #selector(buildXCFramework(_:)))
         case ToolbarItem.stop:
-            return item(itemIdentifier, label: "Stop", symbol: "stop.fill",
-                        toolTip: "Stop the build (⌘.)", action: #selector(stopBuild(_:)))
+            return item(itemIdentifier, label: String(localized: "Stop"), symbol: "stop.fill",
+                        toolTip: String(localized: "Stop the build (⌘.)"), action: #selector(stopBuild(_:)))
         case ToolbarItem.showInFinder:
-            return item(itemIdentifier, label: "Show in Finder", symbol: "folder",
-                        toolTip: "Show the output folder in Finder (⇧⌘R)", action: #selector(showOutputInFinder(_:)))
+            return item(itemIdentifier, label: String(localized: "Show in Finder"), symbol: "folder",
+                        toolTip: String(localized: "Show the output folder in Finder (⇧⌘R)"), action: #selector(showOutputInFinder(_:)))
         default:
             return nil
         }

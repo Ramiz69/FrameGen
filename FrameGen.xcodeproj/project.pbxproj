@@ -7,19 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		489D4094B3E6E7371963AF3C /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400431A229984A2BA6021A3A /* TestSupport.swift */; };
-		FB936CD51DB1A7AA4E66A812 /* ProjectInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6559978338F272BEE8F5BEE0 /* ProjectInfoTests.swift */; };
-		8F8E65782BAD13F02DA168C3 /* XcodeCommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99569F0C0D2242246D1458D /* XcodeCommandTests.swift */; };
+		7B043781095E748B046B6A7D /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A9297C6DD9393123074FF288 /* InfoPlist.xcstrings */; };
+		D22DF401DCB3670954B05D8F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A4BF25418661A63152306EC0 /* Localizable.xcstrings */; };
+		5BF23F17802A2D217FF0BDAA /* ProjectSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54EEE01D3B69A2E626A4B561 /* ProjectSettingsTests.swift */; };
+		1C5D76623698EAC9FE465567 /* FrameGenKit in Frameworks */ = {isa = PBXBuildFile; productRef = 88083ACF9EE0E11ECC3293A7 /* FrameGenKit */; };
+		450AF2350ED57D1ABD7680A0 /* FrameGenCLI in Frameworks */ = {isa = PBXBuildFile; productRef = 1E662F5B2A51E5928EA5DE5F /* FrameGenCLI */; };
+		1684B971E9688F48026891BB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A796FE634C8D4105808032F2 /* main.swift */; };
+		CA5BB0BCB8EE437DE7DF788C /* framegen in Embed Command Line Tool */ = {isa = PBXBuildFile; fileRef = 8C65D63BCC10E10D18999878 /* framegen */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A675F55AC3110800DCF0CDD5 /* ProjectPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EBF6728E80E402601F0EA /* ProjectPicker.swift */; };
+		1F23DEB89FECE631960103F6 /* BuildNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF0F48B45EE379940A5E52 /* BuildNotifier.swift */; };
+		A4859D424E52E9356771FFD0 /* Platform+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC69462091F0A23644D25295 /* Platform+UI.swift */; };
 		269B226DA50FBD34ADC50D92 /* BuildStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E9A0DCFA013DC175158D45 /* BuildStateTests.swift */; };
-		94C9FB2B1653047CD3D88951 /* ProjectLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F8FBFB4AC5D119EA82AD2 /* ProjectLocatorTests.swift */; };
-		50EBD5583671FEDD263C30B8 /* XCFrameworkBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45CABAA2BB083405EBA03BD /* XCFrameworkBuilderTests.swift */; };
-		68945E8C52E8DFDA51A444BB /* ProcessRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D1B7BC7E3148E64AD39E1 /* ProcessRunnerTests.swift */; };
 		1C2B4D17E814365889F847CA /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5AFC913CD2476947CAA048 /* ProjectViewController.swift */; };
-		1E4EAF5737CA5A801A30965E /* XcodeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B8E679A3BEA53C6A6764CB /* XcodeCommand.swift */; };
-		2344326BDB2BA918039074D5 /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2301D103F3056B6F9E2C2E8A /* ProjectInfo.swift */; };
 		2503C114253538F9FC97A806 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161D8634A9AF92289AD7E263 /* MainMenu.swift */; };
 		2597E05CC40E0C90671816AE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8A8EA20663C18ADBAFBDB /* main.swift */; };
-		3BD2CFAAA964DF83C19DF6BB /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF1ECD9C14BBEA60A7F12B5 /* Platform.swift */; };
 		4263B4EBCAE604D628040CC6 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA69EB3841AECDDA8FE2CA3 /* Preferences.swift */; };
 		4D5F3E69A95E08AE6A7DB554 /* CopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F05721EF31C6FBA8F6997EA /* CopyButton.swift */; };
 		56654DA6C6D188523CFAC8E4 /* BuildResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ADBDC6A0E62B606F018CE9 /* BuildResultViewController.swift */; };
@@ -31,7 +32,6 @@
 		90CF7EAAA83E5271BE1E6B16 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8A81626F8D17947E596BD7 /* Project.swift */; };
 		95BE9E0747F32914E5DF0C5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542D3D512896B00E109C50B9 /* AppDelegate.swift */; };
 		9FB6582E9CF3B5E655518C9C /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA714FFE139D2B24154FE823 /* RootViewController.swift */; };
-		A6C586AED3893B3971EF0E47 /* XCFrameworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0109521FC69BF5C9CCA7D5 /* XCFrameworkBuilder.swift */; };
 		A75C65D568B16853AF922C2A /* BuildFailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FB9740B88E1413A0E101E2 /* BuildFailureViewController.swift */; };
 		A9DA7D28376389BB59D48E9C /* BuildController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20115268FEF39A7B7DD03FAE /* BuildController.swift */; };
 		AA475ABF6A527A9AC924422F /* AppKit+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3CF33D3219D0380C3B71EC /* AppKit+Helpers.swift */; };
@@ -41,18 +41,37 @@
 		CDA37F41DA66C2E2BB0ED52A /* RecentProjectCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B7A6B784EA7222D67C3D67 /* RecentProjectCellView.swift */; };
 		D776777011E6892262EBA91C /* FormSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF40A968E5585F39C46B1E /* FormSectionView.swift */; };
 		D9C293F961041AED3D12059B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A597B54F34A37EE715070A5E /* Assets.xcassets */; };
-		DA41911AA058F2CEB4B2007E /* ProcessRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74D9541D23263177A094521 /* ProcessRunner.swift */; };
 		DC6FFD5CE46BBB0AE9E0898B /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE478835E220022471AA72BD /* CalloutView.swift */; };
 		DFFE6552400FF06C1ED2712B /* ObservationLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38968303FC1D994728815881 /* ObservationLoop.swift */; };
 		E46CBC25563ED06F9741CAB0 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1FD55B3D225874AAB28D70 /* LogView.swift */; };
 		E78E021CFB56A255344F6289 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD71D8ABDA20B7FDE977313 /* WelcomeViewController.swift */; };
 		E8EEE8C6D022ABC749637026 /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03DDBD84F4DC30B7D63863 /* MainWindow.swift */; };
-		EA6DB51A574BACC17EB5335A /* ProjectLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B5DCD4782CBA9371395BB /* ProjectLocator.swift */; };
 		EC29396BF8521B43E7E15C9C /* ScrollingContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C1041CA7BE5CFB6B539B79 /* ScrollingContentView.swift */; };
 		F19DAA76C7C1B1E8FDD65F9E /* DropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583D28F8D69380D2DA9AA7FB /* DropTargetView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		569E894EAB1D3205E340DD4E /* Embed Command Line Tool */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Helpers;
+			dstSubfolderSpec = 1;
+			files = (
+				CA5BB0BCB8EE437DE7DF788C /* framegen in Embed Command Line Tool */,
+			);
+			name = "Embed Command Line Tool";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXContainerItemProxy section */
+		59533D4F6DC66AD6E0340B19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B9E803E29E1DB6300DFC001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BFA0A85530AF45B5E004AEC8;
+			remoteInfo = FrameGenCLI;
+		};
 		DFAC54EC022B5FA0CE9E7935 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4B9E803E29E1DB6300DFC001 /* Project object */;
@@ -63,20 +82,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		400431A229984A2BA6021A3A /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
-		6559978338F272BEE8F5BEE0 /* ProjectInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoTests.swift; sourceTree = "<group>"; };
-		C99569F0C0D2242246D1458D /* XcodeCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommandTests.swift; sourceTree = "<group>"; };
+		A9297C6DD9393123074FF288 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		A4BF25418661A63152306EC0 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		54EEE01D3B69A2E626A4B561 /* ProjectSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectSettingsTests.swift; sourceTree = "<group>"; };
+		A796FE634C8D4105808032F2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8C65D63BCC10E10D18999878 /* framegen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = framegen; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7AC304FBEF6790F70206381 /* FrameGenKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FrameGenKit; path = Packages/FrameGenKit; sourceTree = "<group>"; };
+		E14EBF6728E80E402601F0EA /* ProjectPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectPicker.swift"; sourceTree = "<group>"; };
+		A5EF0F48B45EE379940A5E52 /* BuildNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildNotifier.swift"; sourceTree = "<group>"; };
+		EC69462091F0A23644D25295 /* Platform+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform+UI.swift"; sourceTree = "<group>"; };
 		76E9A0DCFA013DC175158D45 /* BuildStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildStateTests.swift; sourceTree = "<group>"; };
-		E27F8FBFB4AC5D119EA82AD2 /* ProjectLocatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLocatorTests.swift; sourceTree = "<group>"; };
-		F45CABAA2BB083405EBA03BD /* XCFrameworkBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCFrameworkBuilderTests.swift; sourceTree = "<group>"; };
-		5C7D1B7BC7E3148E64AD39E1 /* ProcessRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessRunnerTests.swift; sourceTree = "<group>"; };
 		6F9A1917669D5240DD64C7D3 /* FrameGenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FrameGenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01A165050B2E052A7F7EF7E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
 		02B7A6B784EA7222D67C3D67 /* RecentProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentProjectCellView.swift"; sourceTree = "<group>"; };
-		0F0109521FC69BF5C9CCA7D5 /* XCFrameworkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCFrameworkBuilder.swift"; sourceTree = "<group>"; };
 		161D8634A9AF92289AD7E263 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenu.swift"; sourceTree = "<group>"; };
 		20115268FEF39A7B7DD03FAE /* BuildController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildController.swift"; sourceTree = "<group>"; };
-		2301D103F3056B6F9E2C2E8A /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectInfo.swift"; sourceTree = "<group>"; };
 		25C1041CA7BE5CFB6B539B79 /* ScrollingContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollingContentView.swift"; sourceTree = "<group>"; };
 		2C03DDBD84F4DC30B7D63863 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainWindow.swift"; sourceTree = "<group>"; };
 		35FB9740B88E1413A0E101E2 /* BuildFailureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildFailureViewController.swift"; sourceTree = "<group>"; };
@@ -85,11 +105,9 @@
 		3CA69EB3841AECDDA8FE2CA3 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Preferences.swift"; sourceTree = "<group>"; };
 		497574E1E99A9498BAC6CA79 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainWindowController.swift"; sourceTree = "<group>"; };
 		4B9E804629E1DB6300DFC001 /* FrameGen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FrameGen.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EF1ECD9C14BBEA60A7F12B5 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Platform.swift"; sourceTree = "<group>"; };
 		4FC26B0688D03B1E6A31160F /* Workspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Workspace.swift"; sourceTree = "<group>"; };
 		542D3D512896B00E109C50B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate.swift"; sourceTree = "<group>"; };
 		583D28F8D69380D2DA9AA7FB /* DropTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DropTargetView.swift"; sourceTree = "<group>"; };
-		5C3B5DCD4782CBA9371395BB /* ProjectLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectLocator.swift"; sourceTree = "<group>"; };
 		5D3CF33D3219D0380C3B71EC /* AppKit+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppKit+Helpers.swift"; sourceTree = "<group>"; };
 		5E1FD55B3D225874AAB28D70 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogView.swift"; sourceTree = "<group>"; };
 		691DA398C1E950CFC39A7C38 /* StatusHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusHeaderView.swift"; sourceTree = "<group>"; };
@@ -106,13 +124,19 @@
 		B45E7F623E222BDDFA1F654C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController.swift"; sourceTree = "<group>"; };
 		CA714FFE139D2B24154FE823 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RootViewController.swift"; sourceTree = "<group>"; };
 		D17DD1538E46A00CA7E1AC6E /* BuildState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildState.swift"; sourceTree = "<group>"; };
-		D5B8E679A3BEA53C6A6764CB /* XcodeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XcodeCommand.swift"; sourceTree = "<group>"; };
-		D74D9541D23263177A094521 /* ProcessRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessRunner.swift"; sourceTree = "<group>"; };
 		DB8A81626F8D17947E596BD7 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project.swift"; sourceTree = "<group>"; };
 		FFDF40A968E5585F39C46B1E /* FormSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FormSectionView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2E429B78D01BAA5389B9B375 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				450AF2350ED57D1ABD7680A0 /* FrameGenCLI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0B0976A84F3A3080B1A0C9FB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,22 +148,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C5D76623698EAC9FE465567 /* FrameGenKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D3FF7D5CC76A88ACFB9E3DF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A4BF25418661A63152306EC0 /* Localizable.xcstrings */,
+				A9297C6DD9393123074FF288 /* InfoPlist.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A2EB0FF954BDFFBAE9E82BD2 /* FrameGenCLI */ = {
+			isa = PBXGroup;
+			children = (
+				A796FE634C8D4105808032F2 /* main.swift */,
+			);
+			path = FrameGenCLI;
+			sourceTree = "<group>";
+		};
 		04FD085B5B8E47DAD5FC6F22 /* FrameGenTests */ = {
 			isa = PBXGroup;
 			children = (
-				400431A229984A2BA6021A3A /* TestSupport.swift */,
-				6559978338F272BEE8F5BEE0 /* ProjectInfoTests.swift */,
-				C99569F0C0D2242246D1458D /* XcodeCommandTests.swift */,
+				54EEE01D3B69A2E626A4B561 /* ProjectSettingsTests.swift */,
 				76E9A0DCFA013DC175158D45 /* BuildStateTests.swift */,
-				E27F8FBFB4AC5D119EA82AD2 /* ProjectLocatorTests.swift */,
-				F45CABAA2BB083405EBA03BD /* XCFrameworkBuilderTests.swift */,
-				5C7D1B7BC7E3148E64AD39E1 /* ProcessRunnerTests.swift */,
 			);
 			path = FrameGenTests;
 			sourceTree = "<group>";
@@ -147,6 +184,7 @@
 		4B9E804829E1DB6300DFC001 /* FrameGen */ = {
 			isa = PBXGroup;
 			children = (
+				5D3FF7D5CC76A88ACFB9E3DF /* Resources */,
 				1F2B9BC7173AB73CCC8B7520 /* Application */,
 				B6D0FAE1681BEF3FAFD1F4B8 /* Window */,
 				C9AAEB47152BD95C8FFCBCAC /* Controllers */,
@@ -207,8 +245,7 @@
 		17D8D6279D7A52D62BCE90D5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4EF1ECD9C14BBEA60A7F12B5 /* Platform.swift */,
-				2301D103F3056B6F9E2C2E8A /* ProjectInfo.swift */,
+				EC69462091F0A23644D25295 /* Platform+UI.swift */,
 				DB8A81626F8D17947E596BD7 /* Project.swift */,
 				D17DD1538E46A00CA7E1AC6E /* BuildState.swift */,
 				4FC26B0688D03B1E6A31160F /* Workspace.swift */,
@@ -219,11 +256,9 @@
 		59A4223E3A17BE169F5ED5EB /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D74D9541D23263177A094521 /* ProcessRunner.swift */,
-				D5B8E679A3BEA53C6A6764CB /* XcodeCommand.swift */,
-				5C3B5DCD4782CBA9371395BB /* ProjectLocator.swift */,
+				E14EBF6728E80E402601F0EA /* ProjectPicker.swift */,
+				A5EF0F48B45EE379940A5E52 /* BuildNotifier.swift */,
 				3CA69EB3841AECDDA8FE2CA3 /* Preferences.swift */,
-				0F0109521FC69BF5C9CCA7D5 /* XCFrameworkBuilder.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -256,7 +291,9 @@
 		4B9E803D29E1DB6300DFC001 = {
 			isa = PBXGroup;
 			children = (
+				C7AC304FBEF6790F70206381 /* FrameGenKit */,
 				4B9E804829E1DB6300DFC001 /* FrameGen */,
+				A2EB0FF954BDFFBAE9E82BD2 /* FrameGenCLI */,
 				04FD085B5B8E47DAD5FC6F22 /* FrameGenTests */,
 				4B9E804729E1DB6300DFC001 /* Products */,
 			);
@@ -266,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9E804629E1DB6300DFC001 /* FrameGen.app */,
+				8C65D63BCC10E10D18999878 /* framegen */,
 				6F9A1917669D5240DD64C7D3 /* FrameGenTests.xctest */,
 			);
 			name = Products;
@@ -274,6 +312,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BFA0A85530AF45B5E004AEC8 /* FrameGenCLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9E9FB2E5104A070209EAEA1 /* Build configuration list for PBXNativeTarget "FrameGenCLI" */;
+			buildPhases = (
+				6EF8DDD50F7FE83A1611B80D /* Sources */,
+				2E429B78D01BAA5389B9B375 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FrameGenCLI;
+			packageProductDependencies = (
+				1E662F5B2A51E5928EA5DE5F /* FrameGenCLI */,
+			);
+			productName = framegen;
+			productReference = 8C65D63BCC10E10D18999878 /* framegen */;
+			productType = "com.apple.product-type.tool";
+		};
 		3D43AFCF71BAC5808E8553C9 /* FrameGenTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00ED3C2737010EC9CD749A93 /* Build configuration list for PBXNativeTarget "FrameGenTests" */;
@@ -301,13 +358,16 @@
 				4B9E804229E1DB6300DFC001 /* Sources */,
 				4B9E804329E1DB6300DFC001 /* Frameworks */,
 				4B9E804429E1DB6300DFC001 /* Resources */,
+				569E894EAB1D3205E340DD4E /* Embed Command Line Tool */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				67161631E807482F2046C644 /* PBXTargetDependency */,
 			);
 			name = FrameGen;
 			packageProductDependencies = (
+				88083ACF9EE0E11ECC3293A7 /* FrameGenKit */,
 			);
 			productName = generateFramework;
 			productReference = 4B9E804629E1DB6300DFC001 /* FrameGen.app */;
@@ -324,6 +384,9 @@
 				LastUpgradeCheck = 2710;
 				ORGANIZATIONNAME = "Ramiz Kichibekov";
 				TargetAttributes = {
+					BFA0A85530AF45B5E004AEC8 = {
+						CreatedOnToolsVersion = 27.1;
+					};
 					4B9E804529E1DB6300DFC001 = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -339,17 +402,20 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 4B9E803D29E1DB6300DFC001;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
 			packageReferences = (
+				BA75AD55B7EB7E9F3B58FA3A /* XCLocalSwiftPackageReference "Packages/FrameGenKit" */,
 			);
 			productRefGroup = 4B9E804729E1DB6300DFC001 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				4B9E804529E1DB6300DFC001 /* FrameGen */,
+				BFA0A85530AF45B5E004AEC8 /* FrameGenCLI */,
 				3D43AFCF71BAC5808E8553C9 /* FrameGenTests */,
 			);
 		};
@@ -367,6 +433,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B043781095E748B046B6A7D /* InfoPlist.xcstrings in Resources */,
+				D22DF401DCB3670954B05D8F /* Localizable.xcstrings in Resources */,
 				D9C293F961041AED3D12059B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,17 +442,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6EF8DDD50F7FE83A1611B80D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1684B971E9688F48026891BB /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1D5A675EB10CD4EBD4D6C18 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				489D4094B3E6E7371963AF3C /* TestSupport.swift in Sources */,
-				FB936CD51DB1A7AA4E66A812 /* ProjectInfoTests.swift in Sources */,
-				8F8E65782BAD13F02DA168C3 /* XcodeCommandTests.swift in Sources */,
 				269B226DA50FBD34ADC50D92 /* BuildStateTests.swift in Sources */,
-				94C9FB2B1653047CD3D88951 /* ProjectLocatorTests.swift in Sources */,
-				50EBD5583671FEDD263C30B8 /* XCFrameworkBuilderTests.swift in Sources */,
-				68945E8C52E8DFDA51A444BB /* ProcessRunnerTests.swift in Sources */,
+				5BF23F17802A2D217FF0BDAA /* ProjectSettingsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +463,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A675F55AC3110800DCF0CDD5 /* ProjectPicker.swift in Sources */,
+				1F23DEB89FECE631960103F6 /* BuildNotifier.swift in Sources */,
+				A4859D424E52E9356771FFD0 /* Platform+UI.swift in Sources */,
 				2597E05CC40E0C90671816AE /* main.swift in Sources */,
 				95BE9E0747F32914E5DF0C5E /* AppDelegate.swift in Sources */,
 				2503C114253538F9FC97A806 /* MainMenu.swift in Sources */,
@@ -406,16 +480,10 @@
 				56654DA6C6D188523CFAC8E4 /* BuildResultViewController.swift in Sources */,
 				A75C65D568B16853AF922C2A /* BuildFailureViewController.swift in Sources */,
 				BFA764D171B9D01638EA2F22 /* SettingsViewController.swift in Sources */,
-				3BD2CFAAA964DF83C19DF6BB /* Platform.swift in Sources */,
-				2344326BDB2BA918039074D5 /* ProjectInfo.swift in Sources */,
 				90CF7EAAA83E5271BE1E6B16 /* Project.swift in Sources */,
 				7199163DAC1FC47989EF33BF /* BuildState.swift in Sources */,
 				8FCDE32D67EB07691C5D42B2 /* Workspace.swift in Sources */,
-				DA41911AA058F2CEB4B2007E /* ProcessRunner.swift in Sources */,
-				1E4EAF5737CA5A801A30965E /* XcodeCommand.swift in Sources */,
-				EA6DB51A574BACC17EB5335A /* ProjectLocator.swift in Sources */,
 				4263B4EBCAE604D628040CC6 /* Preferences.swift in Sources */,
-				A6C586AED3893B3971EF0E47 /* XCFrameworkBuilder.swift in Sources */,
 				D776777011E6892262EBA91C /* FormSectionView.swift in Sources */,
 				667B8115596F3B5D06AD38AF /* StatusHeaderView.swift in Sources */,
 				7203F75BE629B48F6A108854 /* StepRowView.swift in Sources */,
@@ -433,6 +501,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		67161631E807482F2046C644 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BFA0A85530AF45B5E004AEC8 /* FrameGenCLI */;
+			targetProxy = 59533D4F6DC66AD6E0340B19 /* PBXContainerItemProxy */;
+		};
 		151FDAAC81FA51443326CBBC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4B9E804529E1DB6300DFC001 /* FrameGen */;
@@ -441,6 +514,50 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		D8ED75007B966B3A8517006C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8AD8N54BY6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023–2026 Ramiz Kichibekov. All rights reserved.";
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.ramiz-kichibekov.frameGen.cli";
+				PRODUCT_MODULE_NAME = FrameGenCommandLineTool;
+				PRODUCT_NAME = framegen;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		305254E9B33C06DD0D4F1CDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8AD8N54BY6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023–2026 Ramiz Kichibekov. All rights reserved.";
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.ramiz-kichibekov.frameGen.cli";
+				PRODUCT_MODULE_NAME = FrameGenCommandLineTool;
+				PRODUCT_NAME = framegen;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
 		38928D5A7559732E301B8C90 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -669,6 +786,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A9E9FB2E5104A070209EAEA1 /* Build configuration list for PBXNativeTarget "FrameGenCLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8ED75007B966B3A8517006C /* Debug */,
+				305254E9B33C06DD0D4F1CDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		00ED3C2737010EC9CD749A93 /* Build configuration list for PBXNativeTarget "FrameGenTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -697,6 +823,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		BA75AD55B7EB7E9F3B58FA3A /* XCLocalSwiftPackageReference "Packages/FrameGenKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/FrameGenKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		88083ACF9EE0E11ECC3293A7 /* FrameGenKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FrameGenKit;
+		};
+		1E662F5B2A51E5928EA5DE5F /* FrameGenCLI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FrameGenCLI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4B9E803E29E1DB6300DFC001 /* Project object */;
 }

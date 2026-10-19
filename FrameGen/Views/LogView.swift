@@ -38,7 +38,7 @@ final class LogView: NSView {
         textView.drawsBackground = true
         textView.backgroundColor = .textBackgroundColor
         textView.textContainerInset = NSSize(width: 8, height: 8)
-        textView.setAccessibilityLabel("Build log")
+        textView.setAccessibilityLabel(String(localized: "Build log"))
         scrollView.borderType = .noBorder
         scrollView.hasVerticalScroller = true
         scrollView.wantsLayer = true

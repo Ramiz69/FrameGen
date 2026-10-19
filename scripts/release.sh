@@ -94,6 +94,16 @@ SHORT_VERSION=$(plutil -extract CFBundleShortVersionString raw "$APP/Contents/In
 [[ $SHORT_VERSION == "$VERSION" ]] || fail "The app reports version $SHORT_VERSION instead of $VERSION."
 ARCHS=$(lipo -archs "$APP/Contents/MacOS/FrameGen")
 [[ $ARCHS == arm64 ]] || fail "Expected an arm64-only binary, got: $ARCHS."
+# The command-line tool ships inside the app and is exposed by the Homebrew cask's `binary` stanza.
+TOOL=$APP/Contents/Helpers/framegen
+[[ -x $TOOL ]] || fail "The framegen tool is missing from $TOOL."
+TOOL_ARCHS=$(lipo -archs "$TOOL")
+[[ $TOOL_ARCHS == arm64 ]] || fail "Expected an arm64-only framegen, got: $TOOL_ARCHS."
+# Captured first: under pipefail, `grep -q` closing the pipe early would fail the check with SIGPIPE.
+TOOL_SIGNATURE=$(codesign --display --verbose=2 "$TOOL" 2>&1)
+[[ $TOOL_SIGNATURE == *runtime* ]] || fail "framegen isn't signed with the hardened runtime."
+TOOL_VERSION=$("$TOOL" --version)
+[[ $TOOL_VERSION == "framegen $VERSION" ]] || fail "framegen reports “$TOOL_VERSION” instead of “framegen $VERSION”."
 
 if $DRY_RUN; then
     step "Skipping notarization, stapling and Gatekeeper checks (dry run)"
