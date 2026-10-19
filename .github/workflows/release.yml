@@ -1,0 +1,225 @@
+# Release for FrameGen: builds the macOS app with Xcode 27, signs it with
+# Developer ID, notarizes and staples it, publishes a GitHub release with the
+# zipped app, and (optionally) bumps the Homebrew cask in Ramiz69/homebrew-tap.
+# Runs on every pushed tag matching `v*` (e.g. v2.0) and on demand with an
+# explicit version.
+#
+# Required repository secrets:
+#   DEVELOPER_ID_CERTIFICATE_P12_BASE64  Base64 of the exported .p12 holding the
+#                                        "Developer ID Application" certificate
+#                                        and its private key.
+#   DEVELOPER_ID_CERTIFICATE_PASSWORD    Password the .p12 was exported with.
+#   KEYCHAIN_PASSWORD                    Any random string; used to create and
+#                                        unlock the temporary build keychain.
+#   APP_STORE_CONNECT_API_KEY_P8_BASE64  Base64 of the App Store Connect API key
+#                                        (AuthKey_XXXXXXXXXX.p8) used by notarytool.
+#   APP_STORE_CONNECT_KEY_ID             Key ID of that API key.
+#   APP_STORE_CONNECT_ISSUER_ID          Issuer ID (UUID) of the App Store Connect team.
+#
+# Optional repository secret:
+#   HOMEBREW_TAP_TOKEN                   Fine-grained personal access token with
+#                                        Contents read/write on Ramiz69/homebrew-tap.
+#                                        When unset, the Homebrew tap update is skipped.
+#
+# Note: GitHub-hosted macOS runners may lag behind Xcode 27. If the
+# "Select Xcode 27" step fails because no Xcode 27 is installed, switch
+# `runs-on` to `[self-hosted, macOS, ARM64]`.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, without the leading v (e.g. 2.0)'
+        type: string
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release
+    runs-on: macos-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    env:
+      # Only a boolean, never the token itself: secrets can't be used in `if:`.
+      HAS_HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN != '' }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          REF_NAME: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            raw="$INPUT_VERSION"
+          elif [[ "$REF_TYPE" == "tag" ]]; then
+            raw="$REF_NAME"
+          else
+            echo "::error::Release must be triggered by a v* tag or by workflow_dispatch."
+            exit 1
+          fi
+          version="${raw#v}"
+          if [[ ! "$version" =~ ^[0-9]+(\.[0-9]+){1,2}$ ]]; then
+            echo "::error::Invalid version. Expected MAJOR.MINOR or MAJOR.MINOR.PATCH (e.g. 2.0 or 2.0.1)."
+            exit 1
+          fi
+          echo "Releasing version $version"
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Select Xcode 27
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcode_app="$(ls -d /Applications/Xcode_27*.app 2>/dev/null | sort -V | tail -n 1 || true)"
+          if [[ -z "$xcode_app" ]]; then
+            echo "::error::Xcode 27 is not installed on this runner. GitHub-hosted runners don't have Xcode 27 yet; use a self-hosted runner with labels: self-hosted, macOS, ARM64."
+            exit 1
+          fi
+          echo "Selecting $xcode_app"
+          sudo xcode-select -s "$xcode_app"
+          xcodebuild -version
+
+      - name: Import signing certificate
+        shell: bash
+        env:
+          DEVELOPER_ID_CERTIFICATE_P12_BASE64: ${{ secrets.DEVELOPER_ID_CERTIFICATE_P12_BASE64 }}
+          DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.DEVELOPER_ID_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+          keychain="$RUNNER_TEMP/signing.keychain-db"
+          p12="$RUNNER_TEMP/developer-id.p12"
+          trap 'rm -f "$p12"' EXIT
+
+          printf '%s' "$DEVELOPER_ID_CERTIFICATE_P12_BASE64" | base64 --decode > "$p12"
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$keychain"
+          security import "$p12" \
+            -k "$keychain" \
+            -P "$DEVELOPER_ID_CERTIFICATE_PASSWORD" \
+            -f pkcs12 \
+            -T /usr/bin/codesign \
+            -T /usr/bin/security
+          security set-key-partition-list \
+            -S apple-tool:,apple:,codesign: \
+            -s -k "$KEYCHAIN_PASSWORD" \
+            "$keychain" > /dev/null
+
+          # Add the new keychain to the user search list, keeping the existing ones.
+          # shellcheck disable=SC2046
+          security list-keychains -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+
+          security find-identity -v -p codesigning "$keychain"
+
+      - name: Store notary credentials
+        shell: bash
+        env:
+          APP_STORE_CONNECT_API_KEY_P8_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8_BASE64 }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          umask 077
+          p8="$RUNNER_TEMP/AuthKey.p8"
+          printf '%s' "$APP_STORE_CONNECT_API_KEY_P8_BASE64" | base64 --decode > "$p8"
+          xcrun notarytool store-credentials framegen-notary \
+            --key "$p8" \
+            --key-id "$APP_STORE_CONNECT_KEY_ID" \
+            --issuer "$APP_STORE_CONNECT_ISSUER_ID" \
+            --keychain "$RUNNER_TEMP/signing.keychain-db"
+
+      - name: Build, notarize and package
+        shell: bash
+        env:
+          NOTARY_PROFILE: framegen-notary
+          NOTARY_KEYCHAIN: ${{ runner.temp }}/signing.keychain-db
+        run: |
+          set -euo pipefail
+          scripts/release.sh "$VERSION"
+          ls -l "build/release/FrameGen-$VERSION.zip"
+          echo "SHA-256: $(cat "build/release/FrameGen-$VERSION.zip.sha256")"
+
+      - name: Create GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          args=(
+            "v$VERSION"
+            "build/release/FrameGen-$VERSION.zip"
+            --title "FrameGen $VERSION"
+            --generate-notes
+          )
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            # The tag was pushed, so it must already exist on the remote.
+            args+=(--verify-tag)
+          else
+            # Manual run: the tag may not exist yet; create it at this commit.
+            args+=(--target "$GITHUB_SHA")
+          fi
+          gh release create "${args[@]}"
+
+      - name: Check out Homebrew tap
+        if: env.HAS_HOMEBREW_TAP_TOKEN == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: Ramiz69/homebrew-tap
+          path: homebrew-tap
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+
+      - name: Update Homebrew cask
+        if: env.HAS_HOMEBREW_TAP_TOKEN == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Pushing uses the tap token that the checkout step above persisted.
+          cask="homebrew-tap/Casks/framegen.rb"
+          if [[ ! -f "$cask" ]]; then
+            echo "No cask in the tap yet; seeding it from packaging/homebrew/framegen.rb"
+            mkdir -p "$(dirname "$cask")"
+            cp packaging/homebrew/framegen.rb "$cask"
+          fi
+          scripts/update-cask.sh "$VERSION" "build/release/FrameGen-$VERSION.zip" "$cask"
+
+          cd homebrew-tap
+          git add Casks/framegen.rb
+          if git diff --cached --quiet; then
+            echo "Cask is already up to date; nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "framegen $VERSION"
+          git push origin HEAD
+
+      - name: Clean up signing material
+        if: always()
+        shell: bash
+        run: |
+          keychain="$RUNNER_TEMP/signing.keychain-db"
+          if [[ -f "$keychain" ]]; then
+            security delete-keychain "$keychain" || true
+          fi
+          rm -f "$RUNNER_TEMP/AuthKey.p8" "$RUNNER_TEMP/developer-id.p12"
