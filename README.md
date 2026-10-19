@@ -1,35 +1,89 @@
-# <img src="/image/appIcon.png" width="100" height="100"> FrameGen
+# <img src="image/appIcon.png" width="100" height="100" alt=""> FrameGen
 
-FrameGen is a powerful application designed to streamline the process of creating xcarchive files from your xcodeproj projects. With an intuitive user interface and a wide range of functional capabilities, FrameGen allows you to easily and quickly generate ready-to-distribute archives for your iOS and Mac applications.
+FrameGen is a Mac app that turns an Xcode framework project into a distributable **XCFramework**. Pick a scheme and the platforms, press Build, and FrameGen archives every platform, assembles the XCFramework with its debug symbols, zips it and gives you a ready-to-paste Swift Package Manager `binaryTarget`.
 
-#### Key features of FrameGen:
+<img src="image/configuration.png" width="600" alt="Project options: scheme, configuration, platforms and output folder">
 
-Automatic Xcarchive Generation: FrameGen enables you to efficiently create xcarchive files from your xcodeproj projects. Simply select your project, initiate the generation process, and FrameGen will handle all the necessary steps to create a ready-to-use xcarchive.
+## Features
 
-Custom Export Path: FrameGen provides the option to choose the export path where the generated xcarchive file will be saved. This allows you to organize and structure your working directory for easy access and utilization of the created archives.
+- **One-click XCFramework.** Runs `xcodebuild archive` for each selected platform, then `xcodebuild -create-xcframework` with the dSYM of every slice.
+- **Ready for SwiftPM.** Zips the XCFramework, computes its checksum and writes a `.binaryTarget(...)` snippet next to it.
+- **Privacy manifest check.** Warns when a slice ships without `PrivacyInfo.xcprivacy`, which Apple requires in commonly used third-party SDKs.
+- **Live progress.** Shows each step with its status and duration, the current xcodebuild action and the full build log.
+- **Readable failures.** Shows which step failed and pulls the compiler `error:` lines out of the log.
+- **Remembers your choices.** Keeps the scheme, configuration, platforms and output folder of every project, plus a list of recent projects.
+- **A native Mac app.** Menu bar commands with keyboard shortcuts, a toolbar, drag and drop, Dark Mode and VoiceOver labels.
 
-Platform Support: FrameGen offers flexibility in selecting the supported platforms for xcarchive generation. You can specify whether you need to create archives for iOS devices, iOS Simulator, or Mac Catalyst. This allows you to adapt the generation process to fit the requirements of your project and ensure proper platform support.
+Supported platforms: iOS, iOS Simulator and Mac Catalyst.
 
-User-Friendly Interface: FrameGen is designed for ease of use. With an intuitive interface, you can quickly navigate and configure the parameters for xcarchive generation. Through automated processes and clear instructions, you can efficiently create archives and focus on your application development.
+## Screenshots
 
-With FrameGen in your toolkit, you can greatly simplify the process of generating xcarchive files from your xcodeproj projects. Effortlessly create ready-to-distribute archives for different platforms, optimizing your workflow and enhancing your iOS and Mac app development.
+| Start | Building |
+| --- | --- |
+| <img src="image/welcome.png" width="400" alt="Welcome screen with recent projects"> | <img src="image/progress.png" width="400" alt="Build progress with steps and log"> |
 
-## Main Page
+<img src="image/result.png" width="600" alt="Result with files, checksum and binaryTarget snippet">
 
-<img src="/image/mainPage.png" width="300" height="400">
+## Requirements
 
-## Choose export location
+- A Mac with Apple silicon running macOS 27 or later.
+- Xcode 27 or later, selected with `xcode-select`.
+- A project with a shared framework scheme.
 
-<img src="/image/chooseLocation.png" width="300" height="400">
+## Usage
 
-## Configuration framework
+1. Open a project with **File › Open Project…** (⌘O), pick one from **Recent Projects**, or drop an `.xcodeproj` or its folder onto the window or the Dock icon.
+2. Choose the scheme, the configuration and the platforms.
+3. Press **Build XCFramework** (⌘B). Stop a build with ⌘. or Esc.
+4. When the build finishes, use **Show in Finder**, copy the checksum or copy the `binaryTarget` snippet.
 
-<img src="/image/configuration.png" width="300" height="400">
-
-### General scripts
-
-#### You can see general scripts in ```enum CommandType```
+FrameGen writes these files to `build/` next to the project. You can choose another folder per project, or set a shared default in **Settings** (⌘,).
 
 ```
-final class ShellManager: ShellManagerProtocol
+build/
+├── SampleKit.xcframework
+├── SampleKit.xcframework.zip
+├── SampleKit.binaryTarget.txt
+└── Archives/            # one .xcarchive per platform; optional, see Settings
 ```
+
+Archives are built with `SKIP_INSTALL=NO`, `BUILD_LIBRARIES_FOR_DISTRIBUTION=YES`, `SWIFT_ENABLE_LIBRARY_EVOLUTION=YES` and `SWIFT_EMIT_MODULE_INTERFACE=YES`, so Swift frameworks get the module interfaces that `-create-xcframework` needs.
+
+### Keyboard shortcuts
+
+| Action | Shortcut |
+| --- | --- |
+| Open Project | ⌘O |
+| Close Project | ⇧⌘W |
+| Build XCFramework | ⌘B |
+| Stop | ⌘. |
+| Show Output in Finder | ⇧⌘R |
+| Settings | ⌘, |
+
+## Building from source
+
+Open `FrameGen.xcodeproj` in Xcode 27 and run the **FrameGen** scheme, or build it from the command line:
+
+```bash
+xcodebuild -project FrameGen.xcodeproj -scheme FrameGen -configuration Release build
+```
+
+The app runs `xcodebuild` on your projects, so it can't use the App Sandbox. That also means it can't ship on the Mac App Store. Distribute it signed with a Developer ID and notarized.
+
+## Architecture
+
+FrameGen uses AppKit with Apple's Model-View-Controller pattern and Swift 6 concurrency. The main actor is the default isolation.
+
+| Layer | Contents |
+| --- | --- |
+| `Models` | `Workspace`, `Project` and `BuildState` are `@Observable` classes; `Platform` and `ProjectInfo` are value types. |
+| `Controllers` | `NSViewController` subclasses for every screen, plus `BuildController`, which runs the build pipeline with `async`/`await` and task cancellation. |
+| `Views` | Reusable `NSView` subclasses: form sections, step rows, log view, callouts, drop target. |
+| `Services` | `ProcessRunner` streams process output as an `AsyncThrowingStream`. `XcodeCommand` builds the xcodebuild command lines. `XCFrameworkBuilder` finds the slices, computes the checksum and checks privacy manifests. |
+| `Window`, `Application` | The main window and its toolbar, the menu bar and the app delegate. |
+
+View controllers follow their models with `withObservationTracking` (see `Support/ObservationLoop.swift`), so the UI updates whenever the state changes.
+
+## License
+
+FrameGen is available under the MIT license. See [LICENSE](LICENSE).
