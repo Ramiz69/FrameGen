@@ -24,26 +24,51 @@ final class ShellManager: ShellManagerProtocol {
         case generateFramework(path: String, folder: String, command: Command, script: Script)
         case custom(String)
         
-        var command: String {
+        var executableURL: URL {
+            switch self {
+            case .xcodeVersion, .getSchemesFromProject, .generateFramework:
+                return URL(fileURLWithPath: "/usr/bin/xcodebuild")
+            case .custom:
+                return URL(fileURLWithPath: "/bin/bash")
+            }
+        }
+        
+        var arguments: [String] {
             switch self {
             case .xcodeVersion:
-                return "/usr/bin/xcodebuild -version"
-            case .getSchemesFromProject(let path):
-                return "cd \(path); xcodebuild -list"
+                return ["-version"]
+            case .getSchemesFromProject:
+                return ["-list"]
             case let .generateFramework(path, folder, command, script):
-                return """
-        cd \(path);
-        xcodebuild archive \
-        -scheme '\(command.scheme)' \
-        -configuration \(command.configuration) \
-        -destination '\(script.destination)' \
-        -archivePath '\(folder)\(command.scheme)\(script.archiveName)' \
-        SKIP_INSTALL=NO \
-        BUILD_LIBRARIES_FOR_DISTRIBUTION=YES
-        """
+                return ["archive",
+                        "-scheme", command.scheme,
+                        "-configuration", command.configuration,
+                        "-destination", script.destination,
+                        "-archivePath", Self.archivePath(projectPath: path, folder: folder, command: command, script: script),
+                        "SKIP_INSTALL=NO",
+                        "BUILD_LIBRARIES_FOR_DISTRIBUTION=YES"]
             case .custom(let command):
-                return command
+                return ["-c", command]
             }
+        }
+        
+        var currentDirectoryURL: URL? {
+            switch self {
+            case .getSchemesFromProject(let path), .generateFramework(let path, _, _, _):
+                return URL(fileURLWithPath: path, isDirectory: true)
+            case .xcodeVersion, .custom:
+                return nil
+            }
+        }
+        
+        private static func archivePath(projectPath: String, folder: String, command: Command, script: Script) -> String {
+            let projectURL = URL(fileURLWithPath: projectPath, isDirectory: true)
+            let folderURL = URL(fileURLWithPath: folder, isDirectory: true, relativeTo: projectURL)
+            
+            return folderURL
+                .appendingPathComponent(command.scheme + script.archiveName)
+                .standardizedFileURL
+                .path
         }
     }
     
@@ -78,8 +103,9 @@ final class ShellManager: ShellManagerProtocol {
             
             let task = Process()
             self.process = task
-            task.launchPath = "/bin/bash"
-            task.arguments = ["-c", commandType.command]
+            task.executableURL = commandType.executableURL
+            task.arguments = commandType.arguments
+            task.currentDirectoryURL = commandType.currentDirectoryURL
             
             let outputPipe = Pipe()
             task.standardOutput = outputPipe
@@ -89,30 +115,38 @@ final class ShellManager: ShellManagerProtocol {
             do {
                 try task.run()
             } catch {
+                self.process = nil
                 completionHandler(.failure(error))
+                
+                return
             }
             
+            // Both pipes are drained concurrently: reading them one after another
+            // deadlocks once the unread pipe fills its buffer (xcodebuild is chatty).
+            var errorData = Data()
+            let errorReadGroup = DispatchGroup()
+            errorReadGroup.enter()
+            DispatchQueue.global(qos: .utility).async {
+                errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                errorReadGroup.leave()
+            }
             let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+            errorReadGroup.wait()
+            
+            task.waitUntilExit()
+            self.process = nil
+            
             guard let output = String(data: outputData, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) else {
                 completionHandler(.failure(TaskError.parsingError(data: outputData)))
                 
                 return
             }
-            
-            let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-            guard let errorOutput = String(data: errorData, encoding: .utf8) else {
-                completionHandler(.failure(TaskError.parsingError(data: errorData)))
-                
-                return
-            }
-            
-            task.waitUntilExit()
+            let errorOutput = String(decoding: errorData, as: UTF8.self)
             let status = Int(task.terminationStatus)
             
             switch task.terminationReason {
             case .uncaughtSignal:
-                completionHandler(.success(.output(message: "The operation was canceled.",
-                                                   log: output)))
+                completionHandler(.failure(TaskError.canceled))
             default:
                 if status == .zero {
                     let message: String

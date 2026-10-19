@@ -10,6 +10,7 @@ import Foundation
 enum TaskError: Error {
     case taskFailure(code: Int, message: String)
     case parsingError(data: Data)
+    case canceled
 }
 
 extension TaskError: LocalizedError {
@@ -22,6 +23,8 @@ extension TaskError: LocalizedError {
             let output = String(data: data, encoding: .utf8)
             
             return output
+        case .canceled:
+            return "The operation was canceled."
         }
     }
 }

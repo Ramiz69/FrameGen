@@ -73,21 +73,30 @@ extension OptionsPresenter: OptionsPresenterOutputProtocol {
         
         let settingsManager: SettingsManagerProtocol = SettingsManager.shared
         let folder = settingsManager.getFolder().pathForProcess
+        let lastScript = command.scripts.last
+        // Completion handlers run one at a time on the shell queue, so the flag needs no locking.
+        var didFail = false
         command.scripts.forEach { script in
-            shellManager.shell(.generateFramework(path: path, folder: folder, command: command, script: script)) {
+            shellManager.shell(.generateFramework(path: path, folder: folder, command: command, script: script)) { [weak self] in
+                guard let self, !didFail else { return }
+                
                 switch $0 {
                 case .success(let result):
                     switch result {
                     case let .output(message, log):
                         debugPrint(log)
-                        if scripts.count >= 1, scripts.last == script {
+                        if script == lastScript {
                             DispatchQueue.main.async {
                                 self.view?.scriptsDidCompete(with: nil, message: message)
                             }
                         }
                     }
+                case .failure(TaskError.canceled):
+                    didFail = true
                 case .failure(let error):
                     debugPrint(error.localizedDescription)
+                    didFail = true
+                    self.shellManager.cancelAllScripts()
                     DispatchQueue.main.async {
                         self.view?.scriptsDidCompete(with: error, message: nil)
                     }

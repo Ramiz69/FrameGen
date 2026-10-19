@@ -19,7 +19,7 @@ enum Script {
         case .simulatorOS:
             return "generic/platform=iOS Simulator"
         case .macCatalyst:
-            return "platform=macOS,arch=x86_64,variant=Mac Catalyst"
+            return "generic/platform=macOS,variant=Mac Catalyst"
         }
     }
     
