@@ -68,6 +68,14 @@ Open `FrameGen.xcodeproj` in Xcode 27 and run the **FrameGen** scheme, or build 
 xcodebuild -project FrameGen.xcodeproj -scheme FrameGen -configuration Release build
 ```
 
+Run the unit tests (Swift Testing) with:
+
+```bash
+xcodebuild test -project FrameGen.xcodeproj -scheme FrameGen -destination 'platform=macOS,arch=arm64' CODE_SIGNING_ALLOWED=NO
+```
+
+CI runs the same command on every pull request to `main` (see `.github/workflows/ci.yml`).
+
 The app runs `xcodebuild` on your projects, so it can't use the App Sandbox. That also means it can't ship on the Mac App Store. Distribute it signed with a Developer ID and notarized.
 
 ## Architecture

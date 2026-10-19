@@ -1,0 +1,73 @@
+# CI for FrameGen: builds the macOS app and runs its unit tests with Xcode 27
+# on every push to main, every pull request targeting main, and on demand.
+#
+# Note: GitHub-hosted macOS runners may lag behind Xcode 27. If the
+# "Select Xcode 27" step fails because no Xcode 27 is installed, switch
+# `runs-on` to `[self-hosted, macOS, ARM64]`.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: macos-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 27
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcode_app="$(ls -d /Applications/Xcode_27*.app 2>/dev/null | sort -V | tail -n 1 || true)"
+          if [[ -z "$xcode_app" ]]; then
+            echo "::error::Xcode 27 is not installed on this runner. GitHub-hosted runners don't have Xcode 27 yet; use a self-hosted runner with labels: self-hosted, macOS, ARM64."
+            exit 1
+          fi
+          echo "Selecting $xcode_app"
+          sudo xcode-select -s "$xcode_app"
+          xcodebuild -version
+
+      - name: Build and test
+        shell: bash
+        run: |
+          set -o pipefail
+          if command -v xcbeautify >/dev/null 2>&1; then
+            xcodebuild test \
+              -project FrameGen.xcodeproj \
+              -scheme FrameGen \
+              -destination 'platform=macOS,arch=arm64' \
+              -resultBundlePath TestResults.xcresult \
+              CODE_SIGNING_ALLOWED=NO \
+              | xcbeautify --renderer github-actions
+          else
+            xcodebuild test \
+              -project FrameGen.xcodeproj \
+              -scheme FrameGen \
+              -destination 'platform=macOS,arch=arm64' \
+              -resultBundlePath TestResults.xcresult \
+              CODE_SIGNING_ALLOWED=NO
+          fi
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: TestResults.xcresult
+          retention-days: 7
