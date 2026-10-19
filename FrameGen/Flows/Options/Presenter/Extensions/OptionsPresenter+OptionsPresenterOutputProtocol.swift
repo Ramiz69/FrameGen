@@ -71,8 +71,13 @@ extension OptionsPresenter: OptionsPresenterOutputProtocol {
         command.setScripts(scripts)
         guard !command.scripts.isEmpty else { return }
         
-        let settingsManager: SettingsManagerProtocol = SettingsManager.shared
         let folder = settingsManager.getFolder().pathForProcess
+        let archiveURLs = command.scripts.map { script in
+            URL(fileURLWithPath: ShellManager.CommandType.archivePath(projectPath: path,
+                                                                     folder: folder,
+                                                                     command: command,
+                                                                     script: script))
+        }
         let lastScript = command.scripts.last
         // Completion handlers run one at a time on the shell queue, so the flag needs no locking.
         var didFail = false
@@ -83,12 +88,10 @@ extension OptionsPresenter: OptionsPresenterOutputProtocol {
                 switch $0 {
                 case .success(let result):
                     switch result {
-                    case let .output(message, log):
+                    case let .output(_, log):
                         debugPrint(log)
                         if script == lastScript {
-                            DispatchQueue.main.async {
-                                self.view?.scriptsDidCompete(with: nil, message: message)
-                            }
+                            self.createXCFramework(archiveURLs: archiveURLs)
                         }
                     }
                 case .failure(TaskError.canceled):
@@ -97,10 +100,52 @@ extension OptionsPresenter: OptionsPresenterOutputProtocol {
                     debugPrint(error.localizedDescription)
                     didFail = true
                     self.shellManager.cancelAllScripts()
-                    DispatchQueue.main.async {
-                        self.view?.scriptsDidCompete(with: error, message: nil)
-                    }
+                    self.finish(.failure(error))
                 }
+            }
+        }
+    }
+    
+    private func createXCFramework(archiveURLs: [URL]) {
+        let plan: XCFrameworkBuilder.Plan
+        do {
+            plan = try XCFrameworkBuilder.makePlan(archiveURLs: archiveURLs,
+                                                   outputDirectoryURL: archiveURLs[0].deletingLastPathComponent())
+        } catch {
+            finish(.failure(error))
+            
+            return
+        }
+        
+        shell(.createXCFramework(slices: plan.slices, output: plan.xcframeworkURL)) { [weak self] in
+            self?.shell(.zip(source: plan.xcframeworkURL, destination: plan.zipURL)) { [weak self] in
+                self?.finish(Result { try XCFrameworkBuilder.finalize(plan) })
+            }
+        }
+    }
+    
+    /// Runs a pipeline step and reports its failure; cancellation is silent because the window is already closed.
+    private func shell(_ commandType: ShellManager.CommandType, onSuccess: @escaping () -> Void) {
+        shellManager.shell(commandType) { [weak self] in
+            switch $0 {
+            case .success:
+                onSuccess()
+            case .failure(TaskError.canceled):
+                break
+            case .failure(let error):
+                debugPrint(error.localizedDescription)
+                self?.finish(.failure(error))
+            }
+        }
+    }
+    
+    private func finish(_ result: Result<XCFrameworkBuilder.Summary, Error>) {
+        DispatchQueue.main.async {
+            switch result {
+            case .success(let summary):
+                self.view?.scriptsDidCompete(with: nil, message: summary.message, resultURL: summary.plan.xcframeworkURL)
+            case .failure(let error):
+                self.view?.scriptsDidCompete(with: error, message: nil, resultURL: nil)
             }
         }
     }

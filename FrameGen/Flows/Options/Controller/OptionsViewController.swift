@@ -11,7 +11,7 @@ import Cocoa
 protocol OptionsViewInputProtocol: AnyObject {
     var presenter: OptionsPresenterOutputProtocol { get }
     func updateData(_ data: (configurations: [String], schemes: [String]))
-    func scriptsDidCompete(with error: Error?, message: String?)
+    func scriptsDidCompete(with error: Error?, message: String?, resultURL: URL?)
 }
 
 final class OptionsViewController: NSViewController, OptionsViewInputProtocol {
@@ -70,7 +70,7 @@ final class OptionsViewController: NSViewController, OptionsViewInputProtocol {
         self.data = data
     }
     
-    func scriptsDidCompete(with error: Error?, message: String?) {
+    func scriptsDidCompete(with error: Error?, message: String?, resultURL: URL?) {
         defer {
             contentView.stopIndicators()
         }
@@ -86,14 +86,19 @@ final class OptionsViewController: NSViewController, OptionsViewInputProtocol {
         } else {
             let alert = NSAlert()
             alert.alertStyle = .informational
+            alert.messageText = "XCFramework is ready"
             if let message {
                 alert.informativeText = message
             }
             alert.addButton(withTitle: "OK")
-            let result = alert.runModal()
-            switch result {
-            default: dismissView()
+            if resultURL != nil {
+                alert.addButton(withTitle: "Show in Finder")
             }
+            let result = alert.runModal()
+            if result == .alertSecondButtonReturn, let resultURL {
+                NSWorkspace.shared.activateFileViewerSelecting([resultURL])
+            }
+            dismissView()
         }
     }
     

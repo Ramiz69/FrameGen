@@ -22,12 +22,16 @@ final class ShellManager: ShellManagerProtocol {
         case xcodeVersion
         case getSchemesFromProject(String)
         case generateFramework(path: String, folder: String, command: Command, script: Script)
+        case createXCFramework(slices: [XCFrameworkBuilder.Slice], output: URL)
+        case zip(source: URL, destination: URL)
         case custom(String)
         
         var executableURL: URL {
             switch self {
-            case .xcodeVersion, .getSchemesFromProject, .generateFramework:
+            case .xcodeVersion, .getSchemesFromProject, .generateFramework, .createXCFramework:
                 return URL(fileURLWithPath: "/usr/bin/xcodebuild")
+            case .zip:
+                return URL(fileURLWithPath: "/usr/bin/ditto")
             case .custom:
                 return URL(fileURLWithPath: "/bin/bash")
             }
@@ -46,7 +50,19 @@ final class ShellManager: ShellManagerProtocol {
                         "-destination", script.destination,
                         "-archivePath", Self.archivePath(projectPath: path, folder: folder, command: command, script: script),
                         "SKIP_INSTALL=NO",
-                        "BUILD_LIBRARIES_FOR_DISTRIBUTION=YES"]
+                        "BUILD_LIBRARIES_FOR_DISTRIBUTION=YES",
+                        // Recent Xcode versions no longer derive these from BUILD_LIBRARIES_FOR_DISTRIBUTION,
+                        // and -create-xcframework refuses Swift frameworks without a .swiftinterface.
+                        "SWIFT_ENABLE_LIBRARY_EVOLUTION=YES",
+                        "SWIFT_EMIT_MODULE_INTERFACE=YES"]
+            case let .createXCFramework(slices, output):
+                let sliceArguments = slices.flatMap { slice in
+                    ["-framework", slice.frameworkURL.path] + slice.debugSymbolURLs.flatMap { ["-debug-symbols", $0.path] }
+                }
+                
+                return ["-create-xcframework"] + sliceArguments + ["-output", output.path]
+            case let .zip(source, destination):
+                return ["-c", "-k", "--sequesterRsrc", "--keepParent", source.path, destination.path]
             case .custom(let command):
                 return ["-c", command]
             }
@@ -56,12 +72,12 @@ final class ShellManager: ShellManagerProtocol {
             switch self {
             case .getSchemesFromProject(let path), .generateFramework(let path, _, _, _):
                 return URL(fileURLWithPath: path, isDirectory: true)
-            case .xcodeVersion, .custom:
+            case .xcodeVersion, .createXCFramework, .zip, .custom:
                 return nil
             }
         }
         
-        private static func archivePath(projectPath: String, folder: String, command: Command, script: Script) -> String {
+        static func archivePath(projectPath: String, folder: String, command: Command, script: Script) -> String {
             let projectURL = URL(fileURLWithPath: projectPath, isDirectory: true)
             let folderURL = URL(fileURLWithPath: folder, isDirectory: true, relativeTo: projectURL)
             
@@ -151,7 +167,7 @@ final class ShellManager: ShellManagerProtocol {
                 if status == .zero {
                     let message: String
                     switch commandType {
-                    case .xcodeVersion, .getSchemesFromProject, .custom:
+                    case .xcodeVersion, .getSchemesFromProject, .createXCFramework, .zip, .custom:
                         message = ""
                     case .generateFramework:
                         message = "Framework generation completed successfully."
