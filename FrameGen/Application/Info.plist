@@ -15,6 +15,7 @@
 			<array>
 				<string>com.apple.xcode.project</string>
 				<string>public.folder</string>
+				<string>com.apple.dt.document.workspace</string>
 			</array>
 		</dict>
 	</array>

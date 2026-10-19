@@ -19,7 +19,7 @@ final class CopyButton: NSButton {
 
     // MARK: - Initial methods
 
-    init(title: String = "Copy", value: @escaping () -> String) {
+    init(title: String = String(localized: "Copy"), value: @escaping () -> String) {
         self.value = value
         defaultTitle = title
         super.init(frame: .zero)
@@ -45,10 +45,10 @@ final class CopyButton: NSButton {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(value(), forType: .string)
 
-        title = "Copied"
+        title = String(localized: "Copied")
         image = NSImage(systemSymbolName: "checkmark", accessibilityDescription: nil)
         NSAccessibility.post(element: self, notification: .announcementRequested,
-                             userInfo: [.announcement: "Copied to the clipboard"])
+                             userInfo: [.announcement: String(localized: "Copied to the clipboard")])
         resetTask?.cancel()
         resetTask = Task { [weak self] in
             try? await Task.sleep(for: .seconds(1.5))

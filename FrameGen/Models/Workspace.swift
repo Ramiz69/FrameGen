@@ -6,62 +6,63 @@
 //  Copyright © 2026 Ramiz Kichibekov. All rights reserved.
 //
 
+import FrameGenKit
 import Foundation
 import Observation
 
 enum WorkspaceError: LocalizedError {
     case projectNotFound(URL)
-
+    
     var errorDescription: String? {
         switch self {
         case .projectNotFound(let url):
-            return "“\(url.lastPathComponent)” doesn’t contain an Xcode project."
+            return String(localized: "“\(url.lastPathComponent)” doesn’t contain an Xcode project or workspace.")
         }
     }
-
+    
     var recoverySuggestion: String? {
-        "Choose an .xcodeproj file or the folder that contains it."
+        String(localized: "Choose an .xcodeproj or .xcworkspace, or the folder that contains it.")
     }
 }
 
 /// The app-wide state: the opened project and the recently opened ones.
 @Observable
 final class Workspace {
-
+    
     // MARK: - Properties
-
+    
     private(set) var project: Project?
-    private(set) var recentProjects: [URL] = Preferences.recentProjects {
+    private(set) var recentProjects: [ProjectContainer] = Preferences.recentProjects {
         didSet { Preferences.setRecentProjects(recentProjects) }
     }
-
+    
     // MARK: - Public methods
-
+    
     func open(_ url: URL) throws {
-        guard let fileURL = ProjectLocator.projectFile(for: url) else {
+        guard let container = ProjectLocator.container(for: url) else {
             throw WorkspaceError.projectNotFound(url)
         }
-
-        recentProjects = [fileURL] + recentProjects.filter { $0 != fileURL }
-        guard project?.fileURL != fileURL else { return }
-
-        let project = Project(fileURL: fileURL)
+        
+        recentProjects = [container] + recentProjects.filter { $0 != container }
+        guard project?.container != container else { return }
+        
+        let project = Project(container: container)
         self.project = project
         Task {
-            await project.loadInfo()
+            await project.load()
         }
     }
-
+    
     func closeProject() {
         project = nil
     }
-
-    func removeRecentProject(_ url: URL) {
-        recentProjects.removeAll { $0 == url }
+    
+    func removeRecentProject(_ container: ProjectContainer) {
+        recentProjects.removeAll { $0 == container }
     }
-
+    
     func clearRecentProjects() {
         recentProjects = []
     }
-
+    
 }

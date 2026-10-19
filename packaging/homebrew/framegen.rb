@@ -17,6 +17,7 @@ cask "framegen" do
   depends_on macos: ">= :golden_gate"
 
   app "FrameGen.app"
+  binary "#{appdir}/FrameGen.app/Contents/Helpers/framegen"
 
   zap trash: [
     "~/Library/Preferences/ru.ramiz-kichibekov.frameGen.plist",

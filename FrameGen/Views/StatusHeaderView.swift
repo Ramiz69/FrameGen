@@ -50,7 +50,7 @@ final class StatusHeaderView: NSView {
         spinner.controlSize = .regular
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimation(nil)
-        spinner.setAccessibilityLabel("Building")
+        spinner.setAccessibilityLabel(String(localized: "Building"))
         setIcon(spinner)
     }
 

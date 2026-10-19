@@ -58,7 +58,7 @@ final class StepRowView: NSView {
             durationLabel.stringValue = ""
             titleLabel.textColor = .labelColor
         }
-        setAccessibilityLabel("\(step.title), \(Self.accessibilityStatus(step.status))")
+        setAccessibilityLabel(String(localized: "\(step.title), \(Self.accessibilityStatus(step.status))"))
 
         // Recreating the indicator on every tick would restart the spinner animation.
         guard shownStatus.map({ Self.sameKind($0, step.status) }) != true else { return }
@@ -100,13 +100,13 @@ final class StepRowView: NSView {
     private static func accessibilityStatus(_ status: BuildStep.Status) -> String {
         switch status {
         case .pending:
-            return "waiting"
+            return String(localized: "waiting")
         case .running:
-            return "in progress"
+            return String(localized: "in progress")
         case .succeeded:
-            return "done"
+            return String(localized: "done")
         case .failed:
-            return "failed"
+            return String(localized: "failed")
         }
     }
 

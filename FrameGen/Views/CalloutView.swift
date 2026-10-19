@@ -12,11 +12,14 @@ import AppKit
 final class CalloutView: NSView {
 
     enum Style {
+        case success
         case warning
         case error
 
         var symbol: String {
             switch self {
+            case .success:
+                return "checkmark.circle.fill"
             case .warning:
                 return "exclamationmark.triangle.fill"
             case .error:
@@ -26,6 +29,8 @@ final class CalloutView: NSView {
 
         var color: NSColor {
             switch self {
+            case .success:
+                return .systemGreen
             case .warning:
                 return .systemOrange
             case .error:

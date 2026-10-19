@@ -1,6 +1,6 @@
 //
 //  ProcessRunner.swift
-//  FrameGen
+//  FrameGenKit
 //
 //  Created by Рамиз Кичибеков on 21.04.2023.
 //  Copyright © 2023 Ramiz Kichibekov. All rights reserved.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-nonisolated enum ProcessError: Error {
+public enum ProcessError: Error {
     case failed(status: Int32, output: String)
     case canceled
 }
 
 extension ProcessError: LocalizedError {
 
-    nonisolated var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case let .failed(status, _):
             return "The command exited with code \(status)."
@@ -27,21 +27,56 @@ extension ProcessError: LocalizedError {
 }
 
 /// Runs a command-line tool. Arguments are passed as an array, so paths never need shell escaping.
-nonisolated struct ProcessRunner: Sendable {
+public struct ProcessRunner: Sendable {
 
     // MARK: - Properties
 
-    let executableURL: URL
-    var arguments: [String] = []
+    public let executableURL: URL
+    public var arguments: [String]
     /// When `true`, stderr is interleaved with stdout, which keeps build logs in their natural order.
     /// Disable it for commands whose stdout must stay machine-readable, like `xcodebuild -list -json`.
-    var mergesStandardError = true
+    public var mergesStandardError: Bool
+    /// Replaces the inherited environment when set. GUI apps start with a minimal `PATH`,
+    /// so tools like `gh` that call other tools need one; see `ProcessRunner.toolEnvironment(adding:)`.
+    public var environment: [String: String]?
+
+    // MARK: - Initial methods
+
+    public init(executableURL: URL,
+                arguments: [String] = [],
+                mergesStandardError: Bool = true,
+                environment: [String: String]? = nil) {
+        self.executableURL = executableURL
+        self.arguments = arguments
+        self.mergesStandardError = mergesStandardError
+        self.environment = environment
+    }
+
+    /// The current environment with Homebrew's and the system's tool folders on `PATH`.
+    public static func toolEnvironment(adding variables: [String: String] = [:]) -> [String: String] {
+        var environment = ProcessInfo.processInfo.environment
+        let standardPaths = ["/opt/homebrew/bin", "/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]
+        let currentPaths = environment["PATH"]?.split(separator: ":").map(String.init) ?? []
+        environment["PATH"] = (currentPaths + standardPaths.filter { !currentPaths.contains($0) }).joined(separator: ":")
+        environment.merge(variables) { _, new in new }
+
+        return environment
+    }
+
+    /// Finds an executable by name in the folders of `toolEnvironment(adding:)`'s `PATH`.
+    public static func findTool(named name: String) -> URL? {
+        let paths = toolEnvironment()["PATH"]?.split(separator: ":") ?? []
+
+        return paths
+            .map { URL(fileURLWithPath: String($0)).appendingPathComponent(name) }
+            .first { FileManager.default.isExecutableFile(atPath: $0.path) }
+    }
 
     // MARK: - Public methods
 
     /// Streams the output line by line. Cancelling the consuming task interrupts the process,
     /// the same way Ctrl-C does in Terminal.
-    func lines() -> AsyncThrowingStream<String, any Error> {
+    public func lines() -> AsyncThrowingStream<String, any Error> {
         let (stream, continuation) = AsyncThrowingStream.makeStream(of: String.self)
         let task = Task {
             do {
@@ -58,7 +93,7 @@ nonisolated struct ProcessRunner: Sendable {
 
     /// Runs the process to completion and returns its stdout.
     @concurrent
-    func output() async throws -> String {
+    public func output() async throws -> String {
         try await execute { _ in }
     }
 
@@ -71,6 +106,9 @@ nonisolated struct ProcessRunner: Sendable {
         let process = Process()
         process.executableURL = executableURL
         process.arguments = arguments
+        if let environment {
+            process.environment = environment
+        }
         let outputPipe = Pipe()
         let errorPipe = Pipe()
         process.standardOutput = outputPipe

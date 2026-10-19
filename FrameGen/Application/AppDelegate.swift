@@ -38,7 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        mainWindowController.confirmStoppingBuild(action: "Quit") ? .terminateNow : .terminateCancel
+        mainWindowController.confirmStoppingBuild(action: String(localized: "Stop and Quit")) ? .terminateNow : .terminateCancel
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {

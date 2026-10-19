@@ -73,7 +73,7 @@ final class ProjectViewController: NSViewController {
         case .progress:
             controller = BuildProgressViewController(project: project)
         case .result:
-            controller = BuildResultViewController(project: project)
+            controller = BuildResultViewController(project: project, buildController: buildController)
         case .failure:
             controller = BuildFailureViewController(project: project)
         }

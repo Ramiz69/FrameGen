@@ -36,7 +36,7 @@ final class BuildFailureViewController: NSViewController {
         guard case .failed(let failure) = project.build.phase else { return }
 
         let header = StatusHeaderView()
-        header.setSymbol("xmark.octagon.fill", color: .systemRed, accessibilityDescription: "Failed")
+        header.setSymbol("xmark.octagon.fill", color: .systemRed, accessibilityDescription: String(localized: "Failed"))
         header.titleLabel.stringValue = failure.title
         header.subtitleLabel.stringValue = failure.reason
         contentView.stackView.addFullWidthArrangedSubview(header)
@@ -51,7 +51,7 @@ final class BuildFailureViewController: NSViewController {
         contentView.stackView.addFullWidthArrangedSubview(stepsSection)
 
         if !failure.highlights.isEmpty {
-            let section = FormSectionView(title: "Errors")
+            let section = FormSectionView(title: String(localized: "Errors"))
             let text = NSTextField.text(failure.highlights.joined(separator: "\n"),
                                         font: .monospaced(.callout), color: .labelColor, lines: 0, selectable: true)
             text.preferredMaxLayoutWidth = Metrics.contentWidth - 24
@@ -63,8 +63,8 @@ final class BuildFailureViewController: NSViewController {
             contentView.stackView.addFullWidthArrangedSubview(section)
         }
 
-        let logTitle = NSTextField.text("Build Log", font: .preferred(.headline))
-        let copyLog = CopyButton(title: "Copy Log") { [weak self] in
+        let logTitle = NSTextField.text(String(localized: "Build Log"), font: .preferred(.headline))
+        let copyLog = CopyButton(title: String(localized: "Copy Log")) { [weak self] in
             self?.project.build.log.joined(separator: "\n") ?? ""
         }
         copyLog.controlSize = .small
@@ -73,10 +73,10 @@ final class BuildFailureViewController: NSViewController {
         contentView.stackView.addFullWidthArrangedSubview(NSStackView.horizontal([logTitle, .spacer(), copyLog]))
         contentView.stackView.addFullWidthArrangedSubview(logView)
 
-        let backButton = NSButton.push("Edit Options", target: self, action: #selector(back(_:)))
+        let backButton = NSButton.push(String(localized: "Edit Options"), target: self, action: #selector(back(_:)))
         backButton.controlSize = .large
         backButton.keyEquivalent = "\u{1b}"
-        let retryButton = NSButton.push("Try Again", symbol: "arrow.clockwise", target: nil,
+        let retryButton = NSButton.push(String(localized: "Try Again"), symbol: "arrow.clockwise", target: nil,
                                         action: #selector(MainWindowController.buildXCFramework(_:)))
         retryButton.controlSize = .large
         retryButton.keyEquivalent = "\r"

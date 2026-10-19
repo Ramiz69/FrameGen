@@ -52,7 +52,7 @@ final class RecentProjectCellView: NSTableCellView {
         nameLabel.stringValue = url.deletingPathExtension().lastPathComponent
         pathLabel.stringValue = Formatters.path(url.deletingLastPathComponent())
         toolTip = url.path
-        setAccessibilityLabel("\(nameLabel.stringValue), \(pathLabel.stringValue)")
+        setAccessibilityLabel(String(localized: "\(nameLabel.stringValue), \(pathLabel.stringValue)"))
     }
 
 }

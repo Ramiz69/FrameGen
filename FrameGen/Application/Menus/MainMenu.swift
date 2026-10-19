@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import FrameGenKit
 
 /// Builds the standard Mac menu bar plus the Product menu. Items target the responder chain,
 /// so the main window controller handles and validates the project commands.
@@ -16,7 +17,7 @@ final class MainMenu: NSObject {
     
     let menu = NSMenu(title: "Main Menu")
     private let applicationName = ProcessInfo.processInfo.processName
-    private let recentProjectsMenu = NSMenu(title: "Open Recent")
+    private let recentProjectsMenu = NSMenu(title: String(localized: "Open Recent"))
     
     // MARK: - Initial methods
     
@@ -25,9 +26,9 @@ final class MainMenu: NSObject {
         
         recentProjectsMenu.delegate = self
         menu.items = [submenu(applicationName, items: applicationItems()),
-                      submenu("File", items: fileItems()),
-                      submenu("Edit", items: editItems()),
-                      submenu("Product", items: productItems()),
+                      submenu(String(localized: "File"), items: fileItems()),
+                      submenu(String(localized: "Edit"), items: editItems()),
+                      submenu(String(localized: "Product"), items: productItems()),
                       windowMenu(),
                       helpMenu()]
     }
@@ -35,63 +36,66 @@ final class MainMenu: NSObject {
     // MARK: - Private methods
 
     private func applicationItems() -> [NSMenuItem] {
-        let services = NSMenuItem(title: "Services", action: nil, keyEquivalent: "")
-        services.submenu = NSMenu(title: "Services")
+        let services = NSMenuItem(title: String(localized: "Services"), action: nil, keyEquivalent: "")
+        services.submenu = NSMenu(title: String(localized: "Services"))
         NSApp.servicesMenu = services.submenu
 
-        return [item("About \(applicationName)", #selector(NSApplication.orderFrontStandardAboutPanel(_:))),
+        return [item(String(localized: "About \(applicationName)"), #selector(NSApplication.orderFrontStandardAboutPanel(_:))),
                 .separator(),
-                item("Settings…", #selector(AppDelegate.showSettings(_:)), key: ","),
+                item(String(localized: "Settings…"), #selector(AppDelegate.showSettings(_:)), key: ","),
                 .separator(),
                 services,
                 .separator(),
-                item("Hide \(applicationName)", #selector(NSApplication.hide(_:)), key: "h"),
-                item("Hide Others", #selector(NSApplication.hideOtherApplications(_:)), key: "h", modifiers: [.command, .option]),
-                item("Show All", #selector(NSApplication.unhideAllApplications(_:))),
+                item(String(localized: "Hide \(applicationName)"), #selector(NSApplication.hide(_:)), key: "h"),
+                item(String(localized: "Hide Others"), #selector(NSApplication.hideOtherApplications(_:)), key: "h", modifiers: [.command, .option]),
+                item(String(localized: "Show All"), #selector(NSApplication.unhideAllApplications(_:))),
                 .separator(),
-                item("Quit \(applicationName)", #selector(NSApplication.terminate(_:)), key: "q")]
+                item(String(localized: "Quit \(applicationName)"), #selector(NSApplication.terminate(_:)), key: "q")]
     }
 
     private func fileItems() -> [NSMenuItem] {
-        let openRecent = NSMenuItem(title: "Open Recent", action: nil, keyEquivalent: "")
+        let openRecent = NSMenuItem(title: String(localized: "Open Recent"), action: nil, keyEquivalent: "")
         openRecent.submenu = recentProjectsMenu
 
-        return [item("Open Project…", #selector(MainWindowController.openDocument(_:)), key: "o"),
+        return [item(String(localized: "Open Project…"), #selector(MainWindowController.openDocument(_:)), key: "o"),
                 openRecent,
                 .separator(),
-                item("Close Project", #selector(MainWindowController.closeProject(_:)), key: "w", modifiers: [.command, .shift]),
-                item("Close Window", #selector(NSWindow.performClose(_:)), key: "w")]
+                item(String(localized: "Close Project"), #selector(MainWindowController.closeProject(_:)), key: "w", modifiers: [.command, .shift]),
+                item(String(localized: "Close Window"), #selector(NSWindow.performClose(_:)), key: "w")]
     }
 
     private func editItems() -> [NSMenuItem] {
-        [item("Undo", Selector(("undo:")), key: "z"),
-         item("Redo", Selector(("redo:")), key: "z", modifiers: [.command, .shift]),
+        [item(String(localized: "Undo"), Selector(("undo:")), key: "z"),
+         item(String(localized: "Redo"), Selector(("redo:")), key: "z", modifiers: [.command, .shift]),
          .separator(),
-         item("Cut", #selector(NSText.cut(_:)), key: "x"),
-         item("Copy", #selector(NSText.copy(_:)), key: "c"),
-         item("Paste", #selector(NSText.paste(_:)), key: "v"),
-         item("Select All", #selector(NSText.selectAll(_:)), key: "a")]
+         item(String(localized: "Cut"), #selector(NSText.cut(_:)), key: "x"),
+         item(String(localized: "Copy"), #selector(NSText.copy(_:)), key: "c"),
+         item(String(localized: "Paste"), #selector(NSText.paste(_:)), key: "v"),
+         item(String(localized: "Select All"), #selector(NSText.selectAll(_:)), key: "a")]
     }
 
     private func productItems() -> [NSMenuItem] {
-        [item("Build XCFramework", #selector(MainWindowController.buildXCFramework(_:)), key: "b"),
-         item("Stop", #selector(MainWindowController.stopBuild(_:)), key: "."),
+        [item(String(localized: "Build XCFramework"), #selector(MainWindowController.buildXCFramework(_:)), key: "b"),
+         item(String(localized: "Stop"), #selector(MainWindowController.stopBuild(_:)), key: "."),
          .separator(),
-         item("Show Output in Finder", #selector(MainWindowController.showOutputInFinder(_:)), key: "r", modifiers: [.command, .shift])]
+         item(String(localized: "Publish"), #selector(MainWindowController.publishXCFramework(_:)), key: "u"),
+         item(String(localized: "Copy Build Command"), #selector(MainWindowController.copyBuildCommand(_:)), key: "c", modifiers: [.command, .option]),
+         .separator(),
+         item(String(localized: "Show Output in Finder"), #selector(MainWindowController.showOutputInFinder(_:)), key: "r", modifiers: [.command, .shift])]
     }
 
     private func windowMenu() -> NSMenuItem {
-        let menuItem = submenu("Window", items: [item("Minimize", #selector(NSWindow.performMiniaturize(_:)), key: "m"),
-                                                 item("Zoom", #selector(NSWindow.performZoom(_:))),
+        let menuItem = submenu(String(localized: "Window"), items: [item(String(localized: "Minimize"), #selector(NSWindow.performMiniaturize(_:)), key: "m"),
+                                                 item(String(localized: "Zoom"), #selector(NSWindow.performZoom(_:))),
                                                  .separator(),
-                                                 item("Bring All to Front", #selector(NSApplication.arrangeInFront(_:)))])
+                                                 item(String(localized: "Bring All to Front"), #selector(NSApplication.arrangeInFront(_:)))])
         NSApp.windowsMenu = menuItem.submenu
 
         return menuItem
     }
 
     private func helpMenu() -> NSMenuItem {
-        let menuItem = submenu("Help", items: [])
+        let menuItem = submenu(String(localized: "Help"), items: [])
         NSApp.helpMenu = menuItem.submenu
 
         return menuItem
@@ -126,7 +130,7 @@ extension MainMenu: NSMenuDelegate {
         guard menu === recentProjectsMenu else { return }
 
         let recentProjects = Preferences.recentProjects
-        menu.items = recentProjects.map { url in
+        menu.items = recentProjects.map(\.url).map { url in
             let menuItem = NSMenuItem(title: url.deletingPathExtension().lastPathComponent,
                                       action: #selector(MainWindowController.openRecentProject(_:)),
                                       keyEquivalent: "")
@@ -140,7 +144,7 @@ extension MainMenu: NSMenuDelegate {
         if !recentProjects.isEmpty {
             menu.addItem(.separator())
         }
-        menu.addItem(item("Clear Menu", #selector(MainWindowController.clearRecentProjects(_:))))
+        menu.addItem(item(String(localized: "Clear Menu"), #selector(MainWindowController.clearRecentProjects(_:))))
     }
 
 }

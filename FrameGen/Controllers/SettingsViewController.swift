@@ -12,7 +12,7 @@ final class SettingsWindowController: NSWindowController {
 
     init() {
         let window = NSWindow(contentViewController: SettingsViewController())
-        window.title = "Settings"
+        window.title = String(localized: "Settings")
         window.styleMask = [.titled, .closable]
         window.isReleasedWhenClosed = false
         window.setFrameAutosaveName("SettingsWindow")
@@ -39,12 +39,13 @@ final class SettingsViewController: NSViewController {
     // MARK: - Properties
 
     private let defaults = UserDefaults.standard
-    private let insideProjectRadio = NSButton(radioButtonWithTitle: "In a “build” folder next to the project", target: nil, action: nil)
-    private let customFolderRadio = NSButton(radioButtonWithTitle: "In a shared folder:", target: nil, action: nil)
+    private let insideProjectRadio = NSButton(radioButtonWithTitle: String(localized: "In a “build” folder next to the project"), target: nil, action: nil)
+    private let customFolderRadio = NSButton(radioButtonWithTitle: String(localized: "In a shared folder:"), target: nil, action: nil)
     private let customPathControl = NSPathControl()
     private let chooseButton = NSButton()
-    private let revealCheckbox = NSButton(checkboxWithTitle: "Show the XCFramework in Finder", target: nil, action: nil)
-    private let keepArchivesCheckbox = NSButton(checkboxWithTitle: "Keep intermediate archives", target: nil, action: nil)
+    private let revealCheckbox = NSButton(checkboxWithTitle: String(localized: "Show the XCFramework in Finder"), target: nil, action: nil)
+    private let keepArchivesCheckbox = NSButton(checkboxWithTitle: String(localized: "Keep intermediate archives"), target: nil, action: nil)
+    private let notifyCheckbox = NSButton(checkboxWithTitle: String(localized: "Notify me when a build finishes in the background"), target: nil, action: nil)
 
     // MARK: - Life cycle
 
@@ -57,30 +58,31 @@ final class SettingsViewController: NSViewController {
         customPathControl.isEditable = false
         customPathControl.backgroundColor = .clear
         customPathControl.translatesAutoresizingMaskIntoConstraints = false
-        customPathControl.setAccessibilityLabel("Shared output folder")
-        chooseButton.title = "Choose…"
+        customPathControl.setAccessibilityLabel(String(localized: "Shared output folder"))
+        chooseButton.title = String(localized: "Choose…")
         chooseButton.bezelStyle = .push
         chooseButton.target = self
         chooseButton.action = #selector(chooseFolder(_:))
-        [revealCheckbox, keepArchivesCheckbox].forEach {
+        [revealCheckbox, keepArchivesCheckbox, notifyCheckbox].forEach {
             $0.target = self
             $0.action = #selector(didToggleOption(_:))
         }
 
-        let locationHint = NSTextField.text("A project can override this in its Output section. Results go to a subfolder named after the project.",
+        let locationHint = NSTextField.text(String(localized: "A project can override this in its Output section. Results go to a subfolder named after the project."),
                                             font: .preferred(.footnote), color: .secondaryLabelColor, lines: 0)
         locationHint.preferredMaxLayoutWidth = 380
         let customRow = NSStackView.horizontal([customPathControl, chooseButton])
         customPathControl.widthAnchor.constraint(greaterThanOrEqualToConstant: 220).isActive = true
-        let archivesHint = NSTextField.text("Archives are needed only to rebuild the XCFramework by hand. dSYMs are already inside the XCFramework.",
+        let archivesHint = NSTextField.text(String(localized: "Archives are needed only to rebuild the XCFramework by hand. dSYMs are already inside the XCFramework."),
                                             font: .preferred(.footnote), color: .secondaryLabelColor, lines: 0)
         archivesHint.preferredMaxLayoutWidth = 380
 
-        let grid = NSGridView(views: [[label("Save results:"), insideProjectRadio],
+        let grid = NSGridView(views: [[label(String(localized: "Save results:")), insideProjectRadio],
                                       [NSGridCell.emptyContentView, customFolderRadio],
                                       [NSGridCell.emptyContentView, customRow],
                                       [NSGridCell.emptyContentView, locationHint],
-                                      [label("After building:"), revealCheckbox],
+                                      [label(String(localized: "After building:")), revealCheckbox],
+                                      [NSGridCell.emptyContentView, notifyCheckbox],
                                       [NSGridCell.emptyContentView, keepArchivesCheckbox],
                                       [NSGridCell.emptyContentView, archivesHint]])
         grid.column(at: 0).xPlacement = .trailing
@@ -120,11 +122,12 @@ final class SettingsViewController: NSViewController {
         insideProjectRadio.state = location == .insideProject ? .on : .off
         customFolderRadio.state = location == .customFolder ? .on : .off
         customPathControl.url = customPath.map { URL(fileURLWithPath: $0, isDirectory: true) }
-        customPathControl.placeholderString = "No folder chosen"
+        customPathControl.placeholderString = String(localized: "No folder chosen")
         customPathControl.isEnabled = location == .customFolder
         chooseButton.isEnabled = location == .customFolder
         revealCheckbox.state = defaults.bool(forKey: PreferenceKey.revealInFinder) ? .on : .off
         keepArchivesCheckbox.state = defaults.bool(forKey: PreferenceKey.keepArchives) ? .on : .off
+        notifyCheckbox.state = defaults.bool(forKey: PreferenceKey.notifyWhenDone) ? .on : .off
     }
 
     // MARK: - Actions
@@ -142,7 +145,7 @@ final class SettingsViewController: NSViewController {
     @objc
     private func chooseFolder(_ sender: Any?) {
         let current = customPath.map { URL(fileURLWithPath: $0, isDirectory: true) }
-        if let url = ProjectLocator.chooseFolder(title: "Choose a Folder for Results", startingAt: current) {
+        if let url = ProjectPicker.chooseFolder(title: String(localized: "Choose a Folder for Results"), startingAt: current) {
             defaults.set(url.path, forKey: PreferenceKey.customOutputPath)
         } else if customPath == nil {
             defaults.set(OutputLocation.insideProject.rawValue, forKey: PreferenceKey.outputLocation)
@@ -152,7 +155,14 @@ final class SettingsViewController: NSViewController {
 
     @objc
     private func didToggleOption(_ sender: NSButton) {
-        let key = sender === revealCheckbox ? PreferenceKey.revealInFinder : PreferenceKey.keepArchives
+        let key = switch sender {
+        case revealCheckbox:
+            PreferenceKey.revealInFinder
+        case notifyCheckbox:
+            PreferenceKey.notifyWhenDone
+        default:
+            PreferenceKey.keepArchives
+        }
         defaults.set(sender.state == .on, forKey: key)
     }
 
