@@ -12,3 +12,9 @@ DerivedData/
 Packages/*/.build/
 *.profraw
 *.xcarchive
+
+# Signing material: never commit certificates or API keys
+*.p8
+*.p12
+*.cer
+*.mobileprovision

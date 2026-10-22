@@ -1,5 +1,13 @@
 # <img src="image/appIcon.png" width="100" height="100" alt=""> FrameGen
 
+[![Swift](https://img.shields.io/badge/Swift-6.4-F05138?logo=swift&logoColor=white)](https://www.swift.org)
+[![Platform](https://img.shields.io/badge/Platform-macOS%2027%2B-0A84FF?logo=apple&logoColor=white)](#requirements)
+[![Builds for](https://img.shields.io/badge/Builds%20for-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20visionOS-0A84FF?logo=swift&logoColor=white)](#features)
+[![Xcode](https://img.shields.io/badge/Xcode-27-147EFB?logo=xcode&logoColor=white)](https://developer.apple.com/xcode/)
+[![Release](https://img.shields.io/github/v/release/Ramiz69/FrameGen?logo=github&label=Release)](https://github.com/Ramiz69/FrameGen/releases/latest)
+[![Homebrew](https://img.shields.io/badge/Homebrew-ramiz69%2Ftap%2Fframegen-FBB040?logo=homebrew&logoColor=white)](https://github.com/Ramiz69/homebrew-tap)
+[![License](https://img.shields.io/github/license/Ramiz69/FrameGen?label=License)](LICENSE)
+
 FrameGen is a Mac app and a command-line tool that turn an Xcode framework project into a distributable **XCFramework**. Pick a scheme, press Build, and FrameGen archives every supported platform, assembles the XCFramework with its debug symbols, signs and zips it, publishes it, and gives you a ready-to-paste Swift Package Manager `binaryTarget` with the real download URL.
 
 <img src="image/configuration.png" width="600" alt="Project options: scheme, configuration, platforms and output folder">
