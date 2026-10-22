@@ -14,7 +14,7 @@ cask "framegen" do
   end
 
   depends_on arch: :arm64
-  depends_on macos: ">= :golden_gate"
+  depends_on macos: :golden_gate
 
   app "FrameGen.app"
   binary "#{appdir}/FrameGen.app/Contents/Helpers/framegen"
